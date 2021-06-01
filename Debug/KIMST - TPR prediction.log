@@ -1,0 +1,4 @@
+﻿  DataGenerator.cpp
+C:\Users\DBLab\source\repos\KIMST - TPR prediction\TPR\CEntry.h(36,27): warning C4244: 'argument': conversion from 'double' to 'unsigned long', possible loss of data
+C:\Users\DBLab\source\repos\KIMST - TPR prediction\DataGenerator.cpp(21,23): warning C4018: '<': signed/unsigned mismatch
+  KIMST - TPR prediction.vcxproj -> C:\Users\DBLab\source\repos\KIMST - TPR prediction\Debug\KIMST - TPR prediction.exe

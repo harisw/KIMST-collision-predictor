@@ -1,0 +1,2 @@
+C:\Users\DBLab\source\repos\KIMST - TPR prediction\Debug\KIMST - TPR prediction.exe
+C:\Users\DBLab\source\repos\KIMST - TPR prediction\Debug\KIMST - TPR prediction.pdb
