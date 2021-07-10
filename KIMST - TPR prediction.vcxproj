@@ -144,12 +144,14 @@
     <ClCompile Include="TPR\CEntry.cpp" />
     <ClCompile Include="TPR\ICMSCalculator.cpp" />
     <ClCompile Include="TPR\Node.cpp" />
+    <ClCompile Include="TPR\TPRTree.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="DataGenerator.h" />
     <ClInclude Include="TPR\CEntry.h" />
     <ClInclude Include="TPR\ICMSCalculator.h" />
     <ClInclude Include="TPR\Node.h" />
+    <ClInclude Include="TPR\TPRTree.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

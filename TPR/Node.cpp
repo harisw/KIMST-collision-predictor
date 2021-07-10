@@ -1119,7 +1119,7 @@ void Node::rangeQueryKNN(double centralX, double centralY, double radius, unsign
 			if (dist <= radius)
 			{
 				founded_obj_count++;
-		//		_CEntryList.push_back(m_entry[j]);
+				_CEntryList.push_back(m_entry[j]);	
 			}
 
 		}

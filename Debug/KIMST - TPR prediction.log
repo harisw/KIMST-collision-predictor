@@ -1,4 +1,8 @@
-﻿  DataGenerator.cpp
+﻿  KIMST - TPR prediction.cpp
+C:\Users\DBLab\source\repos\KIMST - TPR prediction\TPR\ICMSCalculator.h(11,1): warning C4005: 'PI': macro redefinition
+C:\Users\DBLab\source\repos\KIMST - TPR prediction\TPR\Node.h(13): message : see previous definition of 'PI'
 C:\Users\DBLab\source\repos\KIMST - TPR prediction\TPR\CEntry.h(36,27): warning C4244: 'argument': conversion from 'double' to 'unsigned long', possible loss of data
-C:\Users\DBLab\source\repos\KIMST - TPR prediction\DataGenerator.cpp(21,23): warning C4018: '<': signed/unsigned mismatch
+C:\Users\DBLab\source\repos\KIMST - TPR prediction\TPR\Node.h(159,38): warning C4244: '=': conversion from 'double' to 'unsigned long', possible loss of data
+C:\Users\DBLab\source\repos\KIMST - TPR prediction\KIMST - TPR prediction.cpp(53,35): warning C4018: '<': signed/unsigned mismatch
+C:\Users\DBLab\source\repos\KIMST - TPR prediction\KIMST - TPR prediction.cpp(86,9): warning C4101: 'objNum': unreferenced local variable
   KIMST - TPR prediction.vcxproj -> C:\Users\DBLab\source\repos\KIMST - TPR prediction\Debug\KIMST - TPR prediction.exe

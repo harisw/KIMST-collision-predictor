@@ -30,6 +30,9 @@
     <ClCompile Include="TPR\ICMSCalculator.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="TPR\TPRTree.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="DataGenerator.h">
@@ -42,6 +45,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="TPR\ICMSCalculator.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="TPR\TPRTree.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

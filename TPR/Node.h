@@ -133,6 +133,7 @@ public:
 		m_parent = _parent;
 	}
 	CEntry* getEntry(){
+		
 		return m_entry;
 	}
 	void setEntry(CEntry _data, int _index){
@@ -158,6 +159,11 @@ public:
 	void setTime(double _time){m_time = _time;}
 	double getTime(){return m_time;}
 	
+	void printEntries()
+	{
+		for(int j = 0; j < m_NumCntEntries; j++)
+			cout << " Entry #" << m_entry[j].getID() << " ( " << &m_entry[j].m_x << ", " << &m_entry[j].m_y << ")" << endl;
+	}
 public: //for insert
 	bool Insert(CEntry _InsertEntry);
 	void UpdateMBRbyEntry(double _time);
