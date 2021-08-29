@@ -148,4 +148,8 @@ public:
 	afx_msg void OnClickedCheckPath();
 	virtual BOOL OnInitDialog();
 	afx_msg void OnBnClickedButton1();
+	int vessel_x;
+	int vessel_y;
+	int vessel_speed;
+	int vessel_rad;
 };

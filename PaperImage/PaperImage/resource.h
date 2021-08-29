@@ -102,6 +102,10 @@
 #define ID_CLOSE                        1130
 #define IDC_COMBO_CQTYPE                1131
 #define IDC_BUTTON1                     1132
+#define IDC_EDIT1                       1133
+#define IDC_EDIT3                       1135
+#define IDC_EDIT2                       1136
+#define IDC_EDIT4                       1137
 #define ID_BUTTON_C1                    32771
 #define ID_BUTTON32772                  32772
 #define ID_BUTTON_GRID                  32772
@@ -138,7 +142,7 @@
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NEXT_RESOURCE_VALUE        317
 #define _APS_NEXT_COMMAND_VALUE         32804
-#define _APS_NEXT_CONTROL_VALUE         1133
+#define _APS_NEXT_CONTROL_VALUE         1134
 #define _APS_NEXT_SYMED_VALUE           312
 #endif
 #endif

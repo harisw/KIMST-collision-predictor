@@ -45,6 +45,10 @@ CCQDialog::CCQDialog(CWnd* pParent)
 	, m_bRFVO(TRUE), m_bRFVO_RLSO(TRUE), m_bRFVO_RMSO(TRUE), m_bRFVO_RHSO(TRUE)
 	, m_bRSMO(TRUE), m_bRSMO_RLSO(TRUE), m_bRSMO_RMSO(TRUE), m_bRSMO_RHSO(TRUE)
 	, m_bDrawPath(TRUE)
+	, vessel_x(0)
+	, vessel_y(0)
+	, vessel_speed(0)
+	, vessel_rad(0)
 {
 	m_bool1[RAO] = &m_bRAO;
 	m_bool2[RAO][RLSO] = &m_bRAO_RLSO;
@@ -144,6 +148,10 @@ void CCQDialog::DoDataExchange(CDataExchange* pDX)
 	DDX_Check(pDX, IDC_CHECK_RSMO_RMSO, m_bRSMO_RMSO);
 	DDX_Check(pDX, IDC_CHECK_RSMO_RHSO, m_bRSMO_RHSO);
 	DDX_Check(pDX, IDC_CHECK_PATH, m_bDrawPath);
+	DDX_Text(pDX, IDC_EDIT1, vessel_x);
+	DDX_Text(pDX, IDC_EDIT2, vessel_y);
+	DDX_Text(pDX, IDC_EDIT4, vessel_speed);
+	DDX_Text(pDX, IDC_EDIT3, vessel_rad);
 }
 
 BEGIN_MESSAGE_MAP(CCQDialog, CDialogEx)
