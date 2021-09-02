@@ -2,10 +2,7 @@
 #include <Windows.h>
 #include <fstream>
 #include "DataGenerator.h"
-
-#define PREDICTION_INTERVAL 3
-#define QUERY_INTERVAL 6
-#define QUERY_RADIUS 50
+#include "Util.h"
 using namespace std;
 
 int safe_distance = 50;
@@ -90,7 +87,8 @@ int main()
 
     x = AREA_L/2; y = AREA_W/2;
     vx = 15;
-    vy = 15;     //DUMMY INPUT
+    vy = 15;
+    int mode = 0;
     //objNum = 50;
     simu_time = 50;
     //my_ship = new CEntry(0, 0, x, y, 0.0, vx, vy, 0.0);
@@ -107,7 +105,15 @@ int main()
     //DataGenerator::Generate(myTree, datasets, objNum, my_ship);
     cout << "Object count : " << myTree->getObjectCount() << endl;
     cout << "Dataset count : " << datasets.size() << endl;
-    
+    switch (mode)
+    {
+    case STATIC_MODE:
+        break;
+    case MOVING_MODE:
+        break;
+    default:
+        break;
+    }
 
     predictSimulation(myTree, my_ship, simu_time);
 }
