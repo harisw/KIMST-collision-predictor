@@ -13,6 +13,12 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Header Files\TPRTree">
+      <UniqueIdentifier>{12207c4b-d477-4644-b966-2175dbd9b757}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\TPRTree">
+      <UniqueIdentifier>{3eb75b0e-2e79-46dc-8856-35ca6f42895a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="KIMST - TPR prediction.cpp">
@@ -21,34 +27,43 @@
     <ClCompile Include="DataGenerator.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="TPR\CEntry.cpp">
+    <ClCompile Include="Vessel.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="TPR\Node.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="TPR\CEntry.cpp">
+      <Filter>Source Files\TPRTree</Filter>
     </ClCompile>
     <ClCompile Include="TPR\ICMSCalculator.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\TPRTree</Filter>
     </ClCompile>
     <ClCompile Include="TPR\TPRTree.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\TPRTree</Filter>
+    </ClCompile>
+    <ClCompile Include="TPR\Node.cpp">
+      <Filter>Source Files\TPRTree</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="DataGenerator.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="TPR\CEntry.h">
+    <ClInclude Include="Util.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="TPR\Node.h">
+    <ClInclude Include="Vessel.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="TPR\CEntry.h">
+      <Filter>Header Files\TPRTree</Filter>
     </ClInclude>
     <ClInclude Include="TPR\ICMSCalculator.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\TPRTree</Filter>
+    </ClInclude>
+    <ClInclude Include="TPR\Node.h">
+      <Filter>Header Files\TPRTree</Filter>
     </ClInclude>
     <ClInclude Include="TPR\TPRTree.h">
-      <Filter>Source Files</Filter>
+      <Filter>Header Files\TPRTree</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

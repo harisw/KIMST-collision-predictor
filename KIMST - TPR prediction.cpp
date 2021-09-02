@@ -108,6 +108,7 @@ int main()
     switch (mode)
     {
     case STATIC_MODE:
+        
         break;
     case MOVING_MODE:
         break;

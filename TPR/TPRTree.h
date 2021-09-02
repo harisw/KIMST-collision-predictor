@@ -16,7 +16,7 @@
 // #include <opencv2/core.hpp>
 
 #define MAX_TRACK_NUM 110000
-#define MAX_LOCATION_XY 999999.
+#define MAX_LOCATION_XY 999999
 
 struct InsertedTrackInfo
 {
@@ -25,7 +25,7 @@ public:
 	double x;
 	double y;
 	double z;
-	double vx;
+	double vx;                                     
 	double vy;
 	double vz;
 	double time;
@@ -166,5 +166,3 @@ public: // cskim
 
 
 };
-
-
