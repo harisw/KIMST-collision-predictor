@@ -5,6 +5,7 @@
 #include "Util.h"
 using namespace std;
 
+int solution = 0;
 int safe_distance = 50;
 CEntry* my_ship;
 vector<CEntry*> datasets;
@@ -111,6 +112,7 @@ int main()
         
         break;
     case MOVING_MODE:
+        if(!solution)
         break;
     default:
         break;

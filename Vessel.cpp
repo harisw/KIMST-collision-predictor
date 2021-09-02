@@ -1,4 +1,5 @@
 #include "Vessel.h"
+#include "Util.h"
 
 void Vessel::setFinalLoc()
 {
