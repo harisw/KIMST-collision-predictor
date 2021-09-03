@@ -92,5 +92,4 @@ void CEntry::updateCurrentLoc()
 {
 	currentLoc->x += m_vx;
 	currentLoc->y += m_vy;
-	currentLoc->z += m_vz;
 }

@@ -27,9 +27,6 @@
     <ClCompile Include="DataGenerator.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Vessel.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="TPR\CEntry.cpp">
       <Filter>Source Files\TPRTree</Filter>
     </ClCompile>
@@ -45,12 +42,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="DataGenerator.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Util.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Vessel.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="TPR\CEntry.h">

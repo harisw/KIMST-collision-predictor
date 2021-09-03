@@ -1,119 +1,141 @@
 #include "DataGenerator.h"
-#include "Util.h"
-#include "Vessel.h"
 using namespace std;
 
-int solution = 0;
-int safe_distance = 50;
-CEntry* my_ship;
-vector<CEntry*> datasets;
 
-double getDistance(CEntry* a, CEntry* b)
+int simu_time;
+struct Line
 {
-    double xDiff = pow(b->m_x - a->m_x, 2);
-    double yDiff = pow(b->m_y - a->m_y, 2);
-    double zDiff = pow(b->m_z - a->m_z, 2);
-
-    return sqrt(xDiff + yDiff + zDiff);
-}
-
-CEntry* predictPosition(CEntry* a, int t)
-{
-    double newX, newY, newZ;
-    double diffTime = (double)t - a->m_time;
-    newX = a->m_x + (diffTime * a->m_vx);
-    newY = a->m_y + (diffTime * a->m_vy);
-    newZ = a->m_z + (diffTime * a->m_vz);
-    return new CEntry(a->m_id, t, newX, newY, newZ, 0, 0, 0);
-}
-
-
-void predictSimulation(TPRTree* tree, CEntry* ourShip, double exec_time)
-{
-    int t = 1;
-    vector<CEntry> overlapMBR;
-    CEntry* predictedObj = nullptr;
-    CEntry* predictedShip = nullptr;
-    
-    while (t <= exec_time) {
-        cout << "TIME : " << t << endl;
-        if (t % PREDICTION_INTERVAL == 0) {
-            predictedShip = predictPosition(ourShip, t);
-
-            if (t == PREDICTION_INTERVAL || t % QUERY_INTERVAL == 0) {
-                overlapMBR.clear();
-                tree->rangeQueryKNN4(predictedShip->m_x, predictedShip->m_y, predictedShip->m_z, QUERY_RADIUS, overlapMBR, t);
-            }
-
-            if (overlapMBR.size() != 0) {
-                for (int j = 0; j < overlapMBR.size(); j++) {
-                    predictedObj = predictPosition(&overlapMBR[j], t);
-                    if (getDistance(predictedObj, predictedShip) < safe_distance)
-                        cout << "COLLISION with " << predictedObj->m_id << " ( " << predictedObj->m_x << ", " << predictedObj->m_y << " )" << endl;
-                }
-
-
-            }
-        }
-        t++;
-        //Sleep(50);
+public:
+    CPosition* p0;
+    CPosition* p1;
+    Line() {}
+    Line(CPosition* _p0, CPosition* _p1) {
+        p0 = _p0;
+        p1 = _p1;
     }
+};
+
+double getDistance(CPosition* p, CPosition* q)
+{
+    return sqrt(pow(p->x - q->x, 2) + pow(p->y - q->y, 2));
 }
 
-void readDataFile(TPRTree* treeinp)
+void readFiletoEntry(string filename, vector<CEntry*>& dataset)
 {
-    ifstream infile("dataset_best.txt");
+    ifstream infile(filename);
     int id, x, y, vx, vy;
-    CEntry* new_entry;
     while (infile >> id >> x >> y >> vx >> vy) {
-        if (id == 0) {
-            //continue;
-            my_ship = new CEntry(0, 0, x, y, 0.0, vx, vy, 0.0);
-        }
-        else {
-            new_entry = new CEntry(id, 0, x, y, 0, vx, vy, 0);
-            treeinp->Insert(CEntry(id, 0, x, y, 0, vx, vy, 0));
-            datasets.push_back(new_entry);
-        }
+        CEntry* newEntry = new CEntry(id, 0, x, y, 0, vx, vy, 0);
+        dataset.push_back(newEntry);
     }
 }
+
+class Vessel
+
+{
+public:
+    CPosition* loc0;
+    CPosition* currentLoc;
+    CPosition* locH;
+    double vx;
+    double vy;
+    double d;
+    vector<Line*> bt;
+    Vessel(CPosition* _loc0, double _vx, double _vy, double _d) {
+        loc0 = _loc0;
+        currentLoc = loc0;
+        vx = _vx;
+        vy = _vy;
+        d = _d;
+    }
+
+    void setFinalLoc()
+    {
+        double xH, yH;
+        xH = loc0->x + (simu_time * vx);
+        yH = loc0->y + (simu_time * vy);
+        locH = new CPosition(xH, yH);
+    }
+
+    void setTrajectoryBuffer()
+    {
+        CPosition* p1 = new CPosition();
+        CPosition* p2 = new CPosition();
+        CPosition* p3 = new CPosition();
+        CPosition* p4 = new CPosition();
+        double x, y;
+
+        p1->x = loc0->x - (d / 2);		//GOING UP CASE
+        p1->y = loc0->y - d;
+
+        p2->x = loc0->x + (d / 2);
+        p2->y = loc0->y - d;
+
+        p3->x = loc0->x - (d / 2);
+        p3->y = loc0->y + d;
+
+        p4->x = loc0->x + (d / 2);
+        p4->y = loc0->y + d;
+
+        bt.insert(bt.end(), { new Line(p1, p2), new Line(p1, p3),
+            new Line(p2, p4), new Line(p3, p4) });
+    }
+
+    void updateCurrentLoc()
+    {
+        currentLoc->x += vx;
+        currentLoc->y += vy;
+    }
+};
+
+void naivePredict(Vessel* myVessel, vector<CEntry*>& dataset)
+{
+    int t = 0;
+    double vx = myVessel->vx;
+    double vy = myVessel->vy;
+    CPosition* vesselLoc0 = myVessel->loc0;
+    while (t < simu_time) {
+        for (int j = 0; j < dataset.size(); j++) {
+            if (getDistance(myVessel->currentLoc, dataset[j]->currentLoc) < myVessel->d)
+                cout << "t" << j << " COLLision on obj#" << dataset[j]->getID() << endl;
+
+            dataset[j]->updateCurrentLoc();
+        }
+        myVessel->updateCurrentLoc();
+        t++;
+    }
+}
+
+void TPRPredict(Vessel* _myVessel, vector<CEntry*>& dataset)
+{
+
+}
+
+void TPRwithFilterPredict(Vessel* _myVessel, vector<CEntry*>& dataset)
+{
+
+}
+
+int solution = 0;
 int main()
 {
-    int objNum;
-    double simu_time;
-    TPRTree* myTree = new TPRTree();
-    double x, y, vx, vy;
-
-    x = AREA_L/2; y = AREA_W/2;
-    vx = 15;
-    vy = 15;
     bool isMoving = true;
-    //objNum = 50;
-    simu_time = 50;
-    //my_ship = new CEntry(0, 0, x, y, 0.0, vx, vy, 0.0);
-    /*cout << "Enter ship info (x, y, vx, vy) : ";
-    cin >> x >> y >> vx >> vy;*/
-    //cout << "Enter number of obj : ";
-    //cin >> objNum;
-    //cout << "Enter execution time : ";
-    //cin >> simu_time;
-
-
     
-    readDataFile(myTree);
-    //DataGenerator::Generate(myTree, datasets, objNum, my_ship);
-    cout << "Object count : " << myTree->getObjectCount() << endl;
-    cout << "Dataset count : " << datasets.size() << endl;
+    //readDataFile(myTree);
+    ////DataGenerator::Generate(myTree, datasets, objNum, my_ship);
+    //cout << "Object count : " << myTree->getObjectCount() << endl;
+    //cout << "Dataset count : " << datasets.size() << endl;
 
     switch (solution)
     {
     case 0:
         if (isMoving) {
-            PointF* initLoc = new PointF((double)AREA_L / 2, (double)AREA_W / 2);
-            Vessel* myVessel = new Vessel(initLoc, 15, 15, 20);
+            CPosition* initPos = new CPosition((double)AREA_L / 2, (double)AREA_W / 2);
+            Vessel* myVessel = new Vessel(initPos, 15, 15, 20);
             vector<CEntry*> dataset;
             readFiletoEntry("dataset_best.txt", dataset);
-            
+            simu_time = 100;
+            naivePredict(myVessel, dataset);
         }
         break;
     case 1:
@@ -124,5 +146,4 @@ int main()
         break;
     }
 
-    predictSimulation(myTree, my_ship, simu_time);
 }

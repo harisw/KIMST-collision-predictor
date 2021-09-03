@@ -13,6 +13,11 @@ struct CPosition
 {
 	double x;				//경도 위치
 	double y;				//위도 위치
+	CPosition() {};
+	CPosition(double _x, double _y) {
+		x = _x;
+		y = _y;
+	}
 };
 
 class CEntry
@@ -30,7 +35,7 @@ public:
 		m_vz = _vz;
 		m_id = _id;
 		m_time = _time;
-		loc0 = new PointF(m_x, m_y);
+		loc0 = new CPosition(m_x, m_y);
 		currentLoc = loc0;
 	}
 
@@ -73,9 +78,9 @@ public :
 	double m_extX, m_extY, m_extZ;
 	double  m_vx, m_vy, m_vz;
 	int m_byEnvironment;
-	PointF* loc0;
-	PointF* currentLoc;
-	PointF* locH;
+	CPosition* loc0;
+	CPosition* currentLoc;
+	CPosition* locH;
 
 public : // for test
 	bool updated = false;

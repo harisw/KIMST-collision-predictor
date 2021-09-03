@@ -145,7 +145,6 @@
     <ClCompile Include="TPR\ICMSCalculator.cpp" />
     <ClCompile Include="TPR\Node.cpp" />
     <ClCompile Include="TPR\TPRTree.cpp" />
-    <ClCompile Include="Vessel.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="DataGenerator.h" />
@@ -153,8 +152,6 @@
     <ClInclude Include="TPR\ICMSCalculator.h" />
     <ClInclude Include="TPR\Node.h" />
     <ClInclude Include="TPR\TPRTree.h" />
-    <ClInclude Include="Util.h" />
-    <ClInclude Include="Vessel.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
