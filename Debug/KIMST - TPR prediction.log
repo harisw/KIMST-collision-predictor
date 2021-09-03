@@ -1,8 +1,26 @@
-﻿  KIMST - TPR prediction.cpp
+﻿  DataGenerator.cpp
 C:\Users\DBLab\source\repos\KIMST - TPR prediction\TPR\ICMSCalculator.h(11,1): warning C4005: 'PI': macro redefinition
 C:\Users\DBLab\source\repos\KIMST - TPR prediction\TPR\Node.h(13): message : see previous definition of 'PI'
 C:\Users\DBLab\source\repos\KIMST - TPR prediction\TPR\CEntry.h(36,27): warning C4244: 'argument': conversion from 'double' to 'unsigned long', possible loss of data
 C:\Users\DBLab\source\repos\KIMST - TPR prediction\TPR\Node.h(159,38): warning C4244: '=': conversion from 'double' to 'unsigned long', possible loss of data
-C:\Users\DBLab\source\repos\KIMST - TPR prediction\KIMST - TPR prediction.cpp(53,35): warning C4018: '<': signed/unsigned mismatch
-C:\Users\DBLab\source\repos\KIMST - TPR prediction\KIMST - TPR prediction.cpp(86,9): warning C4101: 'objNum': unreferenced local variable
-  KIMST - TPR prediction.vcxproj -> C:\Users\DBLab\source\repos\KIMST - TPR prediction\Debug\KIMST - TPR prediction.exe
+C:\Users\DBLab\source\repos\KIMST - TPR prediction\DataGenerator.cpp(22,23): warning C4018: '<': signed/unsigned mismatch
+  KIMST - TPR prediction.cpp
+C:\Users\DBLab\source\repos\KIMST - TPR prediction\TPR\ICMSCalculator.h(11,1): warning C4005: 'PI': macro redefinition
+C:\Users\DBLab\source\repos\KIMST - TPR prediction\TPR\Node.h(13): message : see previous definition of 'PI'
+C:\Users\DBLab\source\repos\KIMST - TPR prediction\TPR\CEntry.h(36,27): warning C4244: 'argument': conversion from 'double' to 'unsigned long', possible loss of data
+C:\Users\DBLab\source\repos\KIMST - TPR prediction\TPR\Node.h(159,38): warning C4244: '=': conversion from 'double' to 'unsigned long', possible loss of data
+C:\Users\DBLab\source\repos\KIMST - TPR prediction\KIMST - TPR prediction.cpp(51,35): warning C4018: '<': signed/unsigned mismatch
+C:\Users\DBLab\source\repos\KIMST - TPR prediction\KIMST - TPR prediction.cpp(84,9): warning C4101: 'objNum': unreferenced local variable
+  TPRTree.cpp
+C:\Users\DBLab\source\repos\KIMST - TPR prediction\TPR\ICMSCalculator.h(11,1): warning C4005: 'PI': macro redefinition
+C:\Users\DBLab\source\repos\KIMST - TPR prediction\TPR\Node.h(13): message : see previous definition of 'PI'
+C:\Users\DBLab\source\repos\KIMST - TPR prediction\TPR\CEntry.h(36,27): warning C4244: 'argument': conversion from 'double' to 'unsigned long', possible loss of data
+C:\Users\DBLab\source\repos\KIMST - TPR prediction\TPR\Node.h(159,38): warning C4244: '=': conversion from 'double' to 'unsigned long', possible loss of data
+  Vessel.cpp
+C:\Users\DBLab\source\repos\KIMST - TPR prediction\Vessel.cpp(15,12): warning C4101: 'y': unreferenced local variable
+C:\Users\DBLab\source\repos\KIMST - TPR prediction\Vessel.cpp(15,9): warning C4101: 'x': unreferenced local variable
+  Generating Code...
+C:\Users\DBLab\source\repos\KIMST - TPR prediction\Vessel.cpp(17): error C4700: uninitialized local variable 'p1' used
+C:\Users\DBLab\source\repos\KIMST - TPR prediction\Vessel.cpp(20): error C4700: uninitialized local variable 'p2' used
+C:\Users\DBLab\source\repos\KIMST - TPR prediction\Vessel.cpp(23): error C4700: uninitialized local variable 'p3' used
+C:\Users\DBLab\source\repos\KIMST - TPR prediction\Vessel.cpp(26): error C4700: uninitialized local variable 'p4' used

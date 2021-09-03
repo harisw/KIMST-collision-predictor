@@ -5,7 +5,9 @@ class PointF;
 class Line;
 class Vessel
 {
+public:
 	PointF* loc0;
+	PointF* currentLoc;
 	PointF* locH;
 	double vx;
 	double vy;
@@ -14,6 +16,7 @@ class Vessel
 	int queryWind;
 	Vessel(PointF* _loc0, double _vx, double _vy, double _d) {
 		loc0 = _loc0;
+		currentLoc = loc0;
 		vx = _vx;
 		vy = _vy;
 		d = _d;
@@ -21,5 +24,5 @@ class Vessel
 	
 	void setFinalLoc();
 	void setTrajectoryBuffer();
-
+	void updateCurrentLoc();
 };

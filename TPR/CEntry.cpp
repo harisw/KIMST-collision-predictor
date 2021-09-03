@@ -87,3 +87,10 @@ void CEntry::extfuture_location(double *XY, double _treeTime)
 	}
 	*/
 }
+
+void CEntry::updateCurrentLoc()
+{
+	currentLoc->x += m_vx;
+	currentLoc->y += m_vy;
+	currentLoc->z += m_vz;
+}

@@ -1,8 +1,6 @@
-#include <iostream>
-#include <Windows.h>
-#include <fstream>
 #include "DataGenerator.h"
 #include "Util.h"
+#include "Vessel.h"
 using namespace std;
 
 int solution = 0;
@@ -89,7 +87,7 @@ int main()
     x = AREA_L/2; y = AREA_W/2;
     vx = 15;
     vy = 15;
-    int mode = 0;
+    bool isMoving = true;
     //objNum = 50;
     simu_time = 50;
     //my_ship = new CEntry(0, 0, x, y, 0.0, vx, vy, 0.0);
@@ -106,13 +104,21 @@ int main()
     //DataGenerator::Generate(myTree, datasets, objNum, my_ship);
     cout << "Object count : " << myTree->getObjectCount() << endl;
     cout << "Dataset count : " << datasets.size() << endl;
-    switch (mode)
+
+    switch (solution)
     {
-    case STATIC_MODE:
-        
+    case 0:
+        if (isMoving) {
+            PointF* initLoc = new PointF((double)AREA_L / 2, (double)AREA_W / 2);
+            Vessel* myVessel = new Vessel(initLoc, 15, 15, 20);
+            vector<CEntry*> dataset;
+            readFiletoEntry("dataset_best.txt", dataset);
+            
+        }
         break;
-    case MOVING_MODE:
-        if(!solution)
+    case 1:
+        break;
+    case 2:
         break;
     default:
         break;

@@ -1,5 +1,9 @@
 #pragma once
-#include<vector>
+#include <vector>
+#include <iostream>
+#include <Windows.h>
+#include <fstream>
+#include"TPR/CEntry.h"
 
 using namespace std;
 #define STATIC_MODE 0
@@ -9,6 +13,8 @@ using namespace std;
 #define QUERY_INTERVAL 6
 #define QUERY_RADIUS 50
 
+#define NAIVE_SOL 0
+#define TPR_SOL 1
 class PointF
 {
 public:
@@ -36,4 +42,14 @@ public:
 double getDistance(PointF* p, PointF* q)
 {
 	return sqrt(pow(p->x - q->x, 2) + pow(p->y - q->y, 2));
+}
+
+void readFiletoEntry(string filename, vector<CEntry*> &dataset)
+{
+	ifstream infile(filename);
+	int id, x, y, vx, vy;
+	while (infile >> id >> x >> y >> vx >> vy) {
+		CEntry* newEntry = new CEntry(id, 0, x, y, 0, vx, vy, 0);
+		dataset.push_back(newEntry);
+	}
 }

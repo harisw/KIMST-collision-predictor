@@ -11,9 +11,12 @@ void Vessel::setFinalLoc()
 
 void Vessel::setTrajectoryBuffer()
 {
-	PointF *p1, *p2, *p3, *p4;
+	PointF* p1 = new PointF();
+	PointF* p2 = new PointF();
+	PointF* p3 = new PointF();
+	PointF* p4 = new PointF();
 	double x, y;
-
+	
 	p1->x = loc0->x - (d / 2);		//GOING UP CASE
 	p1->y = loc0->y - d;
 
@@ -28,4 +31,10 @@ void Vessel::setTrajectoryBuffer()
 
 	bt.insert(bt.end(), { new Line(p1, p2), new Line(p1, p3),
 		new Line(p2, p4), new Line(p3, p4) });
+}
+
+void Vessel::updateCurrentLoc()
+{
+	currentLoc->x += vx;
+	currentLoc->y += vy;
 }

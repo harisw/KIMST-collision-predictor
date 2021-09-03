@@ -30,6 +30,8 @@ public:
 		m_vz = _vz;
 		m_id = _id;
 		m_time = _time;
+		loc0 = new PointF(m_x, m_y);
+		currentLoc = loc0;
 	}
 
 	CEntry* getEntry(){
@@ -63,6 +65,7 @@ public:
 	void extrapolation(double _time);
 	void extfuture_location(double *XY, double _treeTime);
 
+	void updateCurrentLoc();
 public :
 	int m_id;
 	double m_time;
@@ -70,7 +73,9 @@ public :
 	double m_extX, m_extY, m_extZ;
 	double  m_vx, m_vy, m_vz;
 	int m_byEnvironment;
-
+	PointF* loc0;
+	PointF* currentLoc;
+	PointF* locH;
 
 public : // for test
 	bool updated = false;
