@@ -186,13 +186,16 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="CDockPane.h" />
+    <ClInclude Include="CEntry.h" />
     <ClInclude Include="CMPAN.H" />
     <ClInclude Include="CMTOOLS.H" />
     <ClInclude Include="CQArea.h" />
     <ClInclude Include="CQDialog.h" />
     <ClInclude Include="CQObject.h" />
     <ClInclude Include="framework.h" />
+    <ClInclude Include="ICMSCalculator.h" />
     <ClInclude Include="MainFrm.h" />
+    <ClInclude Include="Node.h" />
     <ClInclude Include="ObjListDlg.h" />
     <ClInclude Include="PaperImage.h" />
     <ClInclude Include="PaperImageDoc.h" />
@@ -203,16 +206,20 @@
     <ClInclude Include="SimulDlg.h" />
     <ClInclude Include="SimuOutDlg.h" />
     <ClInclude Include="targetver.h" />
+    <ClInclude Include="TPRTree.h" />
     <ClInclude Include="Util.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CDockPane.cpp" />
+    <ClCompile Include="CEntry.cpp" />
     <ClCompile Include="CMPAN.CPP" />
     <ClCompile Include="CMTOOLS.CPP" />
     <ClCompile Include="CQArea.cpp" />
     <ClCompile Include="CQDialog.cpp" />
     <ClCompile Include="CQObject.cpp" />
+    <ClCompile Include="ICMSCalculator.cpp" />
     <ClCompile Include="MainFrm.cpp" />
+    <ClCompile Include="Node.cpp" />
     <ClCompile Include="ObjListDlg.cpp" />
     <ClCompile Include="PaperImage.cpp" />
     <ClCompile Include="PaperImageDoc.cpp" />
@@ -226,6 +233,7 @@
     <ClCompile Include="RuleDlg.cpp" />
     <ClCompile Include="SimulDlg.cpp" />
     <ClCompile Include="SimuOutDlg.cpp" />
+    <ClCompile Include="TPRTree.cpp" />
     <ClCompile Include="Util.cpp" />
   </ItemGroup>
   <ItemGroup>

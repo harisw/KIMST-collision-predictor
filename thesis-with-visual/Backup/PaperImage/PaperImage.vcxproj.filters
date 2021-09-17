@@ -13,6 +13,12 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="소스 파일\TPRTree">
+      <UniqueIdentifier>{ec6a1af2-938a-46ad-9917-5496f53ea62a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="헤더 파일\TPRTree">
+      <UniqueIdentifier>{c59c1116-06a7-4daf-8959-e9ac1f49ac19}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="PaperImage.h">
@@ -72,6 +78,18 @@
     <ClInclude Include="ObjListDlg.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
+    <ClInclude Include="CEntry.h">
+      <Filter>헤더 파일\TPRTree</Filter>
+    </ClInclude>
+    <ClInclude Include="ICMSCalculator.h">
+      <Filter>헤더 파일\TPRTree</Filter>
+    </ClInclude>
+    <ClInclude Include="TPRTree.h">
+      <Filter>헤더 파일\TPRTree</Filter>
+    </ClInclude>
+    <ClInclude Include="Node.h">
+      <Filter>헤더 파일\TPRTree</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="PaperImage.cpp">
@@ -121,6 +139,18 @@
     </ClCompile>
     <ClCompile Include="ObjListDlg.cpp">
       <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="TPRTree.cpp">
+      <Filter>소스 파일\TPRTree</Filter>
+    </ClCompile>
+    <ClCompile Include="Node.cpp">
+      <Filter>소스 파일\TPRTree</Filter>
+    </ClCompile>
+    <ClCompile Include="ICMSCalculator.cpp">
+      <Filter>소스 파일\TPRTree</Filter>
+    </ClCompile>
+    <ClCompile Include="CEntry.cpp">
+      <Filter>소스 파일\TPRTree</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
