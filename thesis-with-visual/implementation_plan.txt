@@ -1,0 +1,6 @@
+TRAJECTORIES GENERATION
+GenerateData::Generate()::41 -> MFC_FixedMultiThread::setupData(obj_id, trajectory_points)
+
+
+SIMULATION START
+MFC_FixedMultiThread::start() -> ThreadFixedDataGeneration::run() foreach #obj*time-> generateFixedEvent() ->e ReteNet::pushToWM(e)

@@ -1,0 +1,11 @@
+diff a/Backup/PaperImage/Util.h b/Backup/PaperImage/Util.h	(rejected hunks)
+@@ -82,7 +82,8 @@
+ #define TRJTYPE5		105			// ��ȸ
+ 
+ //==============================================================================
+-#define SIMU_LONG_SLEEP 50
++//#define SIMU_LONG_SLEEP 50
++#define SIMU_LONG_SLEEP 200
+ #define SIMU_SLEEP 5
+ #define DISTANCE_RATIO	20
+ //#define SONAR_DISTANCE_RATIO	10

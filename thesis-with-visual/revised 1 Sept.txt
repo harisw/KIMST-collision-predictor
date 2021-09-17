@@ -1,0 +1,36 @@
+First page
+- The TMO Rules Window needs to show rule tag like R1, R2
+- Can't understand what the rules stand for(need a pop up window showing relationship between rules like R1 - R2- R3, R4) I think just putting related rules together is enough
+  like R1 - R2 - R5,    R2 - R3 -R6,    R3- R5 - R7 something like this
+- TMO scenario window needs explanation of RMSO RHSO(maybe just write full name)
+- About the CQ rules need a new pop up window to show CQ on a map(draw CQ on map and tag them with R1, R#)
+
+Second page
+- on the input rules window, only show the rules that are on the map (when displaying rules display them like 
+R1 if A then B
++ if B then C(forward rules)
+- R2 if Z then A, R3 -------- (backward rules)
+but to be honest i think we can keep it like
+- R1--------------
+   FB - R1----------
+   BB - R2 -----------
+           R3 -----------
+but show all at first and when the negative sign is clicked it hides FB BB and just shows R1
+- put tag on CQ map(R1, R2 on CQs)
+- prof suggested two ways, 
+   first on the object window just show current objects like 
+   obj1 at (x,y) 
+   obj 2 at(x,y) 
+   and detected objects window show rule number, detected obj, current time, location and he watns format like R1 {Obj1,Obj3} current time {location}
+  second way is simulation shows object's pattern path. object location window shows like obj1 : pattern type, time, location
+obj2 : pattern type, time, location
+and the detected object window shows detected Objects like
+obj2 : detected time, location
+obj3 : detected time, location
+I think he wants both ways to be implemented and (user can switch two ways)-> let's just make it they can choose at first page
+
+fourth page
+V decrease the size of sonar cus sonar and radar can't be the same size
+
+fifth page
+V increase the size of sonar sensor cus can't see them

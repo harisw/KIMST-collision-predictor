@@ -1,0 +1,2 @@
+IF radar_dist(point(557268, 1126652), 300000, enemyaircraft) & enemyaircraft.type = recon;WINDOW range=2, trigger=1;THEN radarenemyaircraft00
+IF exist(radarenemyaircraft00);WINDOW range=2, trigger=1;THEN radarenemyaircraftresp00
