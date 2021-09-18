@@ -9,8 +9,10 @@ public:
 	REAL	m_fRadius[2];	// 버퍼 반지름(0:BFZ), CQ 반지름(1:CQZ) ==> 경고반지름이 0.0이면 버퍼 반지름의 0.7로 설정
 	RectF	m_rectf;		// CQArea의 MBR
 	wstring	m_RuleID;
+	REAL	m_vx;
+	REAL	m_vy;
 public:
-	CCQArea(int CQType, RectF mapRect, REAL x, REAL y, REAL fRadius1 = 0.0f, REAL fRadius2 = 0.0f);
+	CCQArea(int CQType, RectF mapRect, REAL x, REAL y, REAL fRadius1, REAL _vx, REAL _vy);
 
 	double getMinDistance(PointF& tp);
 	PointF getMBRCenterPoint();
@@ -32,7 +34,7 @@ public:
 class CCQAreaCircle : public CCQArea
 {
 public:
-	CCQAreaCircle(RectF mapRect, REAL x, REAL y, REAL fRadius1, REAL fRadius2 = 0.0f);
+	CCQAreaCircle(RectF mapRect, REAL x, REAL y, REAL fRadius1, REAL _vx, REAL _vy);
 
 	void	draw(Graphics& g, CView* pView);
 	BOOL isIn(PointF pt);
@@ -42,39 +44,39 @@ public:
 	PointF	getDetourPoint(vector<PointF>& vec);
 };
 
-class CCQAreaArc : public CCQArea
-{
-private:
-	double getStartAngle();
-	double getEndAngle();
-
-public:
-	REAL m_fAngle1;	// Arc의 중심각
-	REAL m_fAngle2;	// Arc의 사이각
-
-public:
-	CCQAreaArc(RectF mapRect, REAL x, REAL y, REAL fAngle1, REAL fAngle2, REAL fRadius1, REAL fRadius2 = 0.0f);
-
-	void	draw(Graphics& g, CView* pView);
-
-	BOOL isIn(PointF pt);
-
-	PointF	getApproachPoint(PointF pt);
-	PointF	getRetreatPoint(PointF pt, double angle, BOOL bBound);
-	PointF	getDetourPoint(vector<PointF>& vec);
-};
-
-class CCQAreaRect : public CCQArea
-{
-public:
-	// x, y는 Rectagnle의 중심좌표
-	CCQAreaRect(RectF mapRect, REAL x, REAL y, REAL BFZw, REAL BFZh);
-
-	void	draw(Graphics& g, CView* pView);
-
-	BOOL isIn(PointF pt);
-
-	PointF	getApproachPoint(PointF pt);
-	PointF	getRetreatPoint(PointF pt, double angle, BOOL bBound);
-	PointF	getDetourPoint(vector<PointF>& vec);
-};
+//class CCQAreaArc : public CCQArea
+//{
+//private:
+//	double getStartAngle();
+//	double getEndAngle();
+//
+//public:
+//	REAL m_fAngle1;	// Arc의 중심각
+//	REAL m_fAngle2;	// Arc의 사이각
+//
+//public:
+//	CCQAreaArc(RectF mapRect, REAL x, REAL y, REAL fAngle1, REAL fAngle2, REAL fRadius1, REAL fRadius2 = 0.0f);
+//
+//	void	draw(Graphics& g, CView* pView);
+//
+//	BOOL isIn(PointF pt);
+//
+//	PointF	getApproachPoint(PointF pt);
+//	PointF	getRetreatPoint(PointF pt, double angle, BOOL bBound);
+//	PointF	getDetourPoint(vector<PointF>& vec);
+//};
+//
+//class CCQAreaRect : public CCQArea
+//{
+//public:
+//	// x, y는 Rectagnle의 중심좌표
+//	CCQAreaRect(RectF mapRect, REAL x, REAL y, REAL BFZw, REAL BFZh);
+//
+//	void	draw(Graphics& g, CView* pView);
+//
+//	BOOL isIn(PointF pt);
+//
+//	PointF	getApproachPoint(PointF pt);
+//	PointF	getRetreatPoint(PointF pt, double angle, BOOL bBound);
+//	PointF	getDetourPoint(vector<PointF>& vec);
+//};

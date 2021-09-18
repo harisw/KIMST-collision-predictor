@@ -472,7 +472,7 @@ UINT ThreadFunc(LPVOID pParam)
 
 	// { RLSOmin_kmh, RLSOmax_kmh, RMSOmin_kmh, RMSOmax_kmh, RHSOmin_kmh, RHSOmax_kmht }
 	int divOptions[][8] = {
-		{ 1, 300, 600, 1200, 1500, 2400	},	// RAO 속도 분포
+		{ 1,  20,  30,   50,   60,  100 },	// RSVO 속도 분포
 		{ 1,  20,  30,   50,   60,  100 },	// RSVO 속도 분포
 		{ 1,  10,  20,   30,   40,   50 },	// RFVO 속도 분포
 		{ 1,  10,  20,   40,   60,  100 }	// RSMO 속도 분포

@@ -20,7 +20,7 @@ CCQObject::CCQObject(int objtype, int speedtype, PointF pt, CCQArea* pArea, int 
 	setAbstractPath(pt, pArea, trjtype);
 
 	// 속도는 meter단위로 변경
-	double ms = (double)kmh * 1000.0 / 3600.0;	// m/s
+	double ms = (double)kmh * 10.0 / 36.0;	// m/s
 	setConcreteDrawPath(ms);
 	setConcreteMovePath(ms);
 

@@ -359,6 +359,7 @@ void CPaperImageView::OnDraw(CDC* pDC)
 		}
 	}
 	pDC->BitBlt(0, 0, m_rect.Width()+1, m_rect.Height()+1, m_pDC, 0, 0, SRCCOPY);
+	Sleep(500);
 }
 #pragma endregion
 
@@ -466,41 +467,41 @@ void CPaperImageView::OnButtonZe()
 
 void CPaperImageView::ButtonC(int type)
 {
-	CPaperImageDoc* pDoc = GetDocument();
-
-	//---------------------------------------------------------------------------------
-	// 기존 데이터 모두 제거
-	pDoc->resetData();
-
-	m_dRate = 2222.2222;
-	UpdateStatusBar();
-
-	//---------------------------------------------------------------------------------
-	// CQ 객체 생성
-	//---------------------------------------------------------------------------------
-	// 레이더 중심 좌표
-	int x = (int)(m_rect.Width() / 2.0);
-	int y = (int)(m_rect.Height() * 3.0 / 5.0);
-	PointF mp = Scr2Map(x, y);
-
-	CCQAreaCircle* pArea = new CCQAreaCircle(getMapRect(), mp.X, mp.Y, RADAR_R_METER);
-	pDoc->m_CQAreas.push_back(pArea);
-
-	//---------------------------------------------------------------------------------
-	// MO 객체 생성 (시작점은 여기에서 설정해준다.)
-	//---------------------------------------------------------------------------------
-	// 경로의 시작점 설정 ==> CQArea 밖의 임의의 점에서 출발하는 것으로 수정이 필요
-	POINT tp[4] = { { 700, 100 }, { 200, 100 }, { 50, 850 }, { 850, 850 } };
-
-	for (int i = 0; i < 4; i++)
-//	int i = 0;
-	{
-		PointF tmp = Scr2Map(tp[i].x, tp[i].y);
-		CCQObject* pObj = new CCQObject(RAO, RHSO, tmp, pArea, type, 1000);	// 1000 km/h 속도를 가진 tmp위치의 객체 생성 ==> 임의의 속도로 수정이 필요
-		/*pObj->m_id = i;*/
-		pDoc->m_CQObjects.push_back(pObj);
-		Sleep(1);
-	}
+//	CPaperImageDoc* pDoc = GetDocument();
+//
+//	//---------------------------------------------------------------------------------
+//	// 기존 데이터 모두 제거
+//	pDoc->resetData();
+//
+//	m_dRate = 2222.2222;
+//	UpdateStatusBar();
+//
+//	//---------------------------------------------------------------------------------
+//	// CQ 객체 생성
+//	//---------------------------------------------------------------------------------
+//	// 레이더 중심 좌표
+//	int x = (int)(m_rect.Width() / 2.0);
+//	int y = (int)(m_rect.Height() * 3.0 / 5.0);
+//	PointF mp = Scr2Map(x, y);
+//
+//	//CCQAreaCircle* pArea = new CCQAreaCircle(getMapRect(), mp.X, mp.Y, RADAR_R_METER);
+//	//pDoc->m_CQAreas.push_back(pArea);
+//
+//	//---------------------------------------------------------------------------------
+//	// MO 객체 생성 (시작점은 여기에서 설정해준다.)
+//	//---------------------------------------------------------------------------------
+//	// 경로의 시작점 설정 ==> CQArea 밖의 임의의 점에서 출발하는 것으로 수정이 필요
+//	POINT tp[4] = { { 700, 100 }, { 200, 100 }, { 50, 850 }, { 850, 850 } };
+//
+//	for (int i = 0; i < 4; i++)
+////	int i = 0;
+//	{
+//		PointF tmp = Scr2Map(tp[i].x, tp[i].y);
+//		CCQObject* pObj = new CCQObject(RAO, RHSO, tmp, pArea, type, 1000);	// 1000 km/h 속도를 가진 tmp위치의 객체 생성 ==> 임의의 속도로 수정이 필요
+//		/*pObj->m_id = i;*/
+//		pDoc->m_CQObjects.push_back(pObj);
+//		Sleep(1);
+//	}
 }
 
 void CPaperImageView::OnButtonC1(){	ButtonC(TRJTYPE1);	Invalidate(FALSE);}// 진입 - 정지
@@ -513,40 +514,40 @@ void CPaperImageView::OnButtonC5(){	ButtonC(TRJTYPE5);	Invalidate(FALSE);}// 우
 
 void CPaperImageView::ButtonA(int type)
 {
-	CPaperImageDoc* pDoc = GetDocument();
+	//CPaperImageDoc* pDoc = GetDocument();
 
-	//---------------------------------------------------------------------------------
-	// 기존 데이터 모두 제거
-	pDoc->resetData();
+	////---------------------------------------------------------------------------------
+	//// 기존 데이터 모두 제거
+	//pDoc->resetData();
 
-	m_dRate = 84.4690;
-	UpdateStatusBar();
+	//m_dRate = 84.4690;
+	//UpdateStatusBar();
 
-	//---------------------------------------------------------------------------------
-	// CQ 객체 생성
-	//---------------------------------------------------------------------------------
-	// 소나 원뿔 좌표
-	int x = (int)(m_rect.Width() / 2.0);
-	int y = (int)(m_rect.Height() * 3.0 / 5.0);
-	PointF mp = Scr2Map(x, y);
+	////---------------------------------------------------------------------------------
+	//// CQ 객체 생성
+	////---------------------------------------------------------------------------------
+	//// 소나 원뿔 좌표
+	//int x = (int)(m_rect.Width() / 2.0);
+	//int y = (int)(m_rect.Height() * 3.0 / 5.0);
+	//PointF mp = Scr2Map(x, y);
 
-	CCQAreaArc* pArea = new CCQAreaArc(getMapRect(), mp.X, mp.Y, 270.0f, 90.0f, SONAR_R_METER);
-	pDoc->m_CQAreas.push_back(pArea);
+	//CCQAreaArc* pArea = new CCQAreaArc(getMapRect(), mp.X, mp.Y, 270.0f, 90.0f, SONAR_R_METER);
+	//pDoc->m_CQAreas.push_back(pArea);
 
-	//---------------------------------------------------------------------------------
-	// MO 객체 생성 (시작점은 여기에서 설정해준다.)
-	//---------------------------------------------------------------------------------
-	// 경로의 시작점 설정 ==> CQArea 밖의 임의의 점에서 출발하는 것으로 수정이 필요
-	POINT tp[4] = { { 700, 100 }, { 200, 100 }, { 50, 850 }, { 850, 850 } };
+	////---------------------------------------------------------------------------------
+	//// MO 객체 생성 (시작점은 여기에서 설정해준다.)
+	////---------------------------------------------------------------------------------
+	//// 경로의 시작점 설정 ==> CQArea 밖의 임의의 점에서 출발하는 것으로 수정이 필요
+	//POINT tp[4] = { { 700, 100 }, { 200, 100 }, { 50, 850 }, { 850, 850 } };
 
-	for (int i = 0; i < 4; i++)
-		//	int i = 0;
-	{
-		PointF tmp = Scr2Map(tp[i].x, tp[i].y);
-		CCQObject* pObj = new CCQObject(RAO, RHSO, tmp, pArea, type, 1000);	// 1000 km/h 속도를 가진 tmp위치의 객체 생성 ==> 임의의 속도로 수정이 필요
-		pDoc->m_CQObjects.push_back(pObj);
-		Sleep(1);
-	}
+	//for (int i = 0; i < 4; i++)
+	//	//	int i = 0;
+	//{
+	//	PointF tmp = Scr2Map(tp[i].x, tp[i].y);
+	//	CCQObject* pObj = new CCQObject(RAO, RHSO, tmp, pArea, type, 1000);	// 1000 km/h 속도를 가진 tmp위치의 객체 생성 ==> 임의의 속도로 수정이 필요
+	//	pDoc->m_CQObjects.push_back(pObj);
+	//	Sleep(1);
+	//}
 }
 
 void CPaperImageView::OnButtonA1() { ButtonA(TRJTYPE1);	Invalidate(FALSE); }// 진입 - 정지
@@ -559,42 +560,42 @@ void CPaperImageView::OnButtonA5() { ButtonA(TRJTYPE5);	Invalidate(FALSE); }// �
 
 void CPaperImageView::ButtonR(int type)
 {
-	CPaperImageDoc* pDoc = GetDocument();
+	//CPaperImageDoc* pDoc = GetDocument();
 
-	//---------------------------------------------------------------------------------
-	// 기존 데이터 모두 제거
-	pDoc->resetData();
+	////---------------------------------------------------------------------------------
+	//// 기존 데이터 모두 제거
+	//pDoc->resetData();
 
-	m_dRate = 2222.2222;
-	UpdateStatusBar();
+	//m_dRate = 2222.2222;
+	//UpdateStatusBar();
 
-	//---------------------------------------------------------------------------------
-	// CQ 객체 생성
-	//---------------------------------------------------------------------------------
-	// Rectangle 좌표
-	int x = (int)(m_rect.Width() / 2.0);
-	int y = (int)(m_rect.Height() * 3.0 / 5.0);
-	PointF mp = Scr2Map(x, y);
+	////---------------------------------------------------------------------------------
+	//// CQ 객체 생성
+	////---------------------------------------------------------------------------------
+	//// Rectangle 좌표
+	//int x = (int)(m_rect.Width() / 2.0);
+	//int y = (int)(m_rect.Height() * 3.0 / 5.0);
+	//PointF mp = Scr2Map(x, y);
 
-	REAL xdist = RADAR_R_METER * 2.0f;
-	REAL ydist = RADAR_R_METER;
+	//REAL xdist = RADAR_R_METER * 2.0f;
+	//REAL ydist = RADAR_R_METER;
 
-	CCQAreaRect* pArea = new CCQAreaRect(getMapRect(), mp.X, mp.Y, xdist, ydist);
-	pDoc->m_CQAreas.push_back(pArea);
+	//CCQAreaRect* pArea = new CCQAreaRect(getMapRect(), mp.X, mp.Y, xdist, ydist);
+	//pDoc->m_CQAreas.push_back(pArea);
 
-	//---------------------------------------------------------------------------------
-	// MO 객체 생성 (시작점은 여기에서 설정해준다.)
-	//---------------------------------------------------------------------------------
-	// 경로의 시작점 설정 ==> CQArea 밖의 임의의 점에서 출발하는 것으로 수정이 필요
-	POINT tp[4] = { { 700, 100 }, { 200, 100 }, { 50, 850 }, { 850, 850 } };
+	////---------------------------------------------------------------------------------
+	//// MO 객체 생성 (시작점은 여기에서 설정해준다.)
+	////---------------------------------------------------------------------------------
+	//// 경로의 시작점 설정 ==> CQArea 밖의 임의의 점에서 출발하는 것으로 수정이 필요
+	//POINT tp[4] = { { 700, 100 }, { 200, 100 }, { 50, 850 }, { 850, 850 } };
 
-	for (int i = 0; i < 4; i++)
-	{
-		PointF tmp = Scr2Map(tp[i].x, tp[i].y);
-		CCQObject* pObj = new CCQObject(RAO, RHSO, tmp, pArea, type, 1000);	// 1000 km/h 속도를 가진 tmp위치의 객체 생성 ==> 임의의 속도로 수정이 필요
-		pDoc->m_CQObjects.push_back(pObj);
-		Sleep(1);
-	}
+	//for (int i = 0; i < 4; i++)
+	//{
+	//	PointF tmp = Scr2Map(tp[i].x, tp[i].y);
+	//	CCQObject* pObj = new CCQObject(RAO, RHSO, tmp, pArea, type, 1000);	// 1000 km/h 속도를 가진 tmp위치의 객체 생성 ==> 임의의 속도로 수정이 필요
+	//	pDoc->m_CQObjects.push_back(pObj);
+	//	Sleep(1);
+	//}
 }
 
 void CPaperImageView::OnButtonR1() { ButtonR(TRJTYPE1);	Invalidate(FALSE); }// 진입 - 정지

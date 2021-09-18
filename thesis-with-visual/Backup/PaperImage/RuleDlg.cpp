@@ -1,4 +1,4 @@
-// RuleDlg.cpp : implementation file
+﻿// RuleDlg.cpp : implementation file
 //
 
 #include "pch.h"
@@ -32,6 +32,12 @@ void RuleDlg::DoDataExchange(CDataExchange* pDX)
 {
 	CDialogEx::DoDataExchange(pDX);
 	DDX_Control(pDX, IDC_LIST3, m_objList);
+	DDX_Control(pDX, IDC_LIST2, m_vesselList);
+	DDX_Control(pDX, IDC_EDITVESSEL_X, m_vesselX_edit);
+	DDX_Control(pDX, IDC_EDITVESSEL_Y, m_vesselY_edit);
+	DDX_Control(pDX, IDC_EDITVESSEL_RAD, m_vesselRad_edit);
+	DDX_Control(pDX, IDC_EDITVESSEL_VX, m_vesselVX_edit);
+	DDX_Control(pDX, IDC_EDITVESSEL_VY, m_vesselVY_edit);
 }
 
 
@@ -43,10 +49,10 @@ BEGIN_MESSAGE_MAP(RuleDlg, CDialogEx)
 	ON_BN_CLICKED(IDC_BUTTON8, &RuleDlg::OnBnClickedButton8)
 	ON_BN_CLICKED(IDC_BUTTON4, &RuleDlg::OnBnClickedButton4)
 	ON_BN_CLICKED(IDC_BUTTON_CLEAR, &RuleDlg::OnBnClickedButtonClear)
-	ON_BN_CLICKED(IDC_INSERT_R, &RuleDlg::OnBnClickedInsertR)
 	ON_BN_CLICKED(IDC_BUTTON9, &RuleDlg::OnBnClickedButton9)
 	ON_EN_CHANGE(IDC_EDIT1, &RuleDlg::OnEnChangeEdit1)
 	ON_EN_CHANGE(IDC_EDIT2, &RuleDlg::OnEnChangeEdit2)*/
+	ON_BN_CLICKED(IDC_PRE_INSERT_R, &RuleDlg::OnBnClickedPreInsertR)
 END_MESSAGE_MAP()
 
 
@@ -61,22 +67,42 @@ BOOL RuleDlg::OnInitDialog()
 	dwStyle = GetDlgItem(IDC_LIST2)->SendMessage(LVM_GETEXTENDEDLISTVIEWSTYLE, 0, 0);
 	dwStyle |= LVS_EX_FULLROWSELECT | LVS_REPORT | LVS_EX_GRIDLINES;
 	GetDlgItem(IDC_LIST2)->SendMessage(LVM_SETEXTENDEDLISTVIEWSTYLE, 0, dwStyle);
+	m_vesselList.InsertColumn(0, _T("ID"), LVCFMT_LEFT, 30);
+	m_vesselList.InsertColumn(1, _T("Position"), LVCFMT_LEFT, 100);
+	m_vesselList.InsertColumn(2, _T("Speed"), LVCFMT_LEFT, 100);
+	m_vesselList.InsertColumn(3, _T("Radius"), LVCFMT_LEFT, 100);
 
 	dwStyle = GetDlgItem(IDC_LIST3)->SendMessage(LVM_GETEXTENDEDLISTVIEWSTYLE, 0, 0);
 	dwStyle |= LVS_EX_FULLROWSELECT | LVS_REPORT | LVS_EX_GRIDLINES;
 	GetDlgItem(IDC_LIST3)->SendMessage(LVM_SETEXTENDEDLISTVIEWSTYLE, 0, dwStyle);
-	
 	m_objList.InsertColumn(0, _T("ID"), LVCFMT_LEFT, 30);
 	m_objList.InsertColumn(1, _T("Speed"), LVCFMT_LEFT, 100);
-	m_objList.InsertColumn(2, _T("Init Position"), LVCFMT_LEFT, 1000);
+	m_objList.InsertColumn(2, _T("Position"), LVCFMT_LEFT, 1000);
+
+	CPaperImageView* pView = (CPaperImageView*)this->m_pWnd;
+	CPaperImageDoc* pDoc = pView->GetDocument();
+	// 쓰레드마다 별도로 랜덤 초기화해야 함.
+	srand((unsigned int)time(0));
+	pView->initScale();
+	RectF mapRect = pView->getMapRect();
+	PointF mp = pView->Scr2Map((int)(pView->m_rect.Width() / 2.0), (int)(pView->m_rect.Height() * 3.0 / 5.0));
+
+	CString t;
+	t.Format(_T("%f"), mp.X);
+	GetDlgItem(IDC_EDITVESSEL_X)->SetWindowText(t);
+	t.Format(_T("%f"), mp.Y);
+	GetDlgItem(IDC_EDITVESSEL_Y)->SetWindowText(t);
+	int rad = 100;
+	int vx = 30;
+	int vy = 30;
+	t.Format(_T("%d"), rad);
+	GetDlgItem(IDC_EDITVESSEL_RAD)->SetWindowText(t);
+	t.Format(_T("%d"), vx);
+	GetDlgItem(IDC_EDITVESSEL_VX)->SetWindowText(t);
+	t.Format(_T("%d"), vy);
+	GetDlgItem(IDC_EDITVESSEL_VY)->SetWindowText(t);
 
 	return TRUE;
-}
-
-
-void RuleDlg::OnBnClickedPreInsertR()
-{
-
 }
 
 void RuleDlg::OnBnClickedButton7()
@@ -106,20 +132,22 @@ afx_msg LRESULT RuleDlg::OnGenerateObj(WPARAM wParam, LPARAM lParam)
 		temp = pDoc->m_CQObjects[j];
 		t.Format(_T("%d"), temp->m_id);
 		int nIndex = m_objList.InsertItem(j, t);
-		switch (temp->m_speedtype)
-		{
-		case RLSO:
-			m_objList.SetItemText(nIndex, 1, _T("Low"));
-			break;
-		case RMSO:
-			m_objList.SetItemText(nIndex, 1, _T("Medium"));
-			break;
-		case RHSO:
-			m_objList.SetItemText(nIndex, 1, _T("High"));
-			break;
-		default:
-			break;
-		}
+		t.Format(_T("%d"), temp->m_kmh);
+		m_objList.SetItemText(nIndex, 1, t);
+		//switch (temp->m_speedtype)
+		//{
+		//case RLSO:
+		//	m_objList.SetItemText(nIndex, 1, _T("Low"));
+		//	break;
+		//case RMSO:
+		//	m_objList.SetItemText(nIndex, 1, _T("Medium"));
+		//	break;
+		//case RHSO:
+		//	m_objList.SetItemText(nIndex, 1, _T("High"));
+		//	break;
+		//default:
+		//	break;
+		//}
 		tempVec = *temp->getMovePath();
 		t.Format(_T("%f,   %f"), tempVec[0].X, tempVec[0].Y);
 		m_objList.SetItemText(nIndex, 2, t);
@@ -127,4 +155,69 @@ afx_msg LRESULT RuleDlg::OnGenerateObj(WPARAM wParam, LPARAM lParam)
 	}
 	lastObjId = pDoc->m_CQObjects.size();
 	return 0;
+}
+
+void RuleDlg::OnBnClickedPreInsertR()
+{
+	CString path;
+	string strX, strY, strRad, strVX, strVY;
+	LPTSTR str_line;
+	int len;
+	len = m_vesselX_edit.LineLength(m_vesselX_edit.LineIndex(0));
+	str_line = path.GetBuffer(len);
+	m_vesselX_edit.GetLine(0, str_line, len);
+	path.ReleaseBuffer();
+	strX = CT2A(str_line);
+
+	len = m_vesselY_edit.LineLength(m_vesselY_edit.LineIndex(0));
+	str_line = path.GetBuffer(len);
+	m_vesselY_edit.GetLine(0, str_line, len);
+	path.ReleaseBuffer();
+	strY = CT2A(str_line);
+
+	/*len = m_vesselRad_edit.LineLength(m_vesselRad_edit.LineIndex(0));
+	str_line = path.GetBuffer(len);
+	m_vesselRad_edit.GetLine(0, str_line, len);
+	path.ReleaseBuffer();
+	strRad = CT2A(str_line);
+
+	len = m_vesselVX_edit.LineLength(m_vesselVX_edit.LineIndex(0));
+	str_line = path.GetBuffer(len);
+	m_vesselVX_edit.GetLine(0, str_line, len);
+	path.ReleaseBuffer();
+	strVX = CT2A(str_line);
+
+	len = m_vesselVY_edit.LineLength(m_vesselVY_edit.LineIndex(0));
+	str_line = path.GetBuffer(len);
+	m_vesselVY_edit.GetLine(0, str_line, len);
+	path.ReleaseBuffer();
+	strVY = CT2A(str_line);*/
+	float vx, vy, rad;
+	BOOL bWorked = FALSE;
+
+	vx = GetDlgItemInt(IDC_EDITVESSEL_VX, &bWorked);
+	vy = GetDlgItemInt(IDC_EDITVESSEL_VY, &bWorked);
+	rad = GetDlgItemInt(IDC_EDITVESSEL_RAD, &bWorked);
+
+	CPaperImageView* pView = (CPaperImageView*)this->m_pWnd;
+	CPaperImageDoc* pDoc = pView->GetDocument();
+
+	srand((unsigned int)time(0));
+	pView->initScale();
+	RectF mapRect = pView->getMapRect();
+	CCQArea* newVessel = new CCQAreaCircle(mapRect, stof(strX), stof(strY), rad, vx, vy);
+	pDoc->m_CQAreas.push_back(newVessel);
+
+	CString t;
+	int nIndex = m_vesselList.InsertItem(0, _T("0"));
+	t.Format(_T("%.2f, %.2f"), stof(strX), stof(strY));
+	m_vesselList.SetItemText(nIndex, 1, t);
+
+	t.Format(_T("%.2f, %.2f"), vx, vy);
+	m_vesselList.SetItemText(nIndex, 2, t);
+
+	t.Format(_T("%.2f"), rad);
+	m_vesselList.SetItemText(nIndex, 3, t);
+
+
 }

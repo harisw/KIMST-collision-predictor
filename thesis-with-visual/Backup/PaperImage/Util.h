@@ -5,10 +5,6 @@
 #define TOTALCOUNT		30
 #define MOVEINTERVAL	60	// 이동체 표시 간격 (초)
 
-#define LSCHECKINTERVAL	50
-#define MSCHECKINTERVAL	25
-#define HSCHECKINTERVAL	10
-
 #define WINDOW_W	1200
 #define WINDOW_H	760
 //==============================================================================
@@ -50,26 +46,9 @@
 
 //==============================================================================
 //Original
-#define RADAR_MAP_METER		2000000.0	// 화면에 표시되는 전체 지도 거리(2000km)
-#define SONAR_MAP_METER		100000.0	// 화면에 표시되는 전체 지도 거리(100km)
-
-#define RADAR_R_METER	300000.0	// 레이더 반경 (300km)
-#define RADAR_R_INT	300000	// 레이더 반경 (300km)
-#define SONAR_R_METER	20000.0		// 소나 반경 (20km)
-#define SONAR_R_INT	200000		// 소나 반경 (20km)
-
-#define RADAR_CELL_METER		25000.0		// 셀의 가로 간격 (25km)
-#define SONAR_CELL_METER		2500.0		// 셀의 가로 간격 (0.25km)
-
-//Scaled down
-//#define RADAR_MAP_METER		20000.0	// 화면에 표시되는 전체 지도 거리(2000km)
-//#define SONAR_MAP_METER		100000.0	// 화면에 표시되는 전체 지도 거리(100km)
-//
-//#define RADAR_R_METER	3000.0	// 레이더 반경 (300km)
-//#define SONAR_R_METER	20000.0		// 소나 반경 (20km)
-//
-//#define RADAR_CELL_METER		250.0		// 셀의 가로 간격 (25km)
-//#define SONAR_CELL_METER		2500.0		// 셀의 가로 간격 (0.25km)
+#define RADAR_MAP_METER		20000.0	// 화면에 표시되는 전체 지도 거리(2000km)
+#define RADAR_R_METER	3000.0	// 레이더 반경 (300km)
+#define RADAR_CELL_METER		250.0		// 셀의 가로 간격 (25km)
 
 #define ARROWWIDTH		8			// 경로를 그려줄 때 화살표 크기
 

@@ -28,7 +28,6 @@ public:
 	CListCtrl m_insertedList;
 	int lastObjId = 0;
 	virtual BOOL OnInitDialog();
-	afx_msg void OnBnClickedPreInsertR();
 	afx_msg void OnBnClickedButton7();
 	afx_msg void OnBnClickedButton6();
 public:
@@ -36,5 +35,11 @@ public:
 protected:
 	afx_msg LRESULT OnGenerateObj(WPARAM wParam, LPARAM lParam);
 public:
-	afx_msg void OnBnClickedInsertR();
+	CListCtrl m_vesselList;
+	afx_msg void OnBnClickedPreInsertR();
+	CEdit m_vesselX_edit;
+	CEdit m_vesselY_edit;
+	CEdit m_vesselRad_edit;
+	CEdit m_vesselVX_edit;
+	CEdit m_vesselVY_edit;
 };
