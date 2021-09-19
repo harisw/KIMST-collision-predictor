@@ -93,7 +93,7 @@ BOOL RuleDlg::OnInitDialog()
 	t.Format(_T("%f"), mp.Y);
 	GetDlgItem(IDC_EDITVESSEL_Y)->SetWindowText(t);
 	int rad = 100;
-	int vx = 30;
+	int vx = 50;
 	int vy = 30;
 	t.Format(_T("%d"), rad);
 	GetDlgItem(IDC_EDITVESSEL_RAD)->SetWindowText(t);

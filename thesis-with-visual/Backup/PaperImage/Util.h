@@ -4,6 +4,7 @@
 
 #define TOTALCOUNT		30
 #define MOVEINTERVAL	60	// 이동체 표시 간격 (초)
+#define SIMU_TIME		50
 
 #define WINDOW_W	1200
 #define WINDOW_H	760

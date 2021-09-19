@@ -28,6 +28,10 @@ CCQObject::CCQObject(int objtype, int speedtype, PointF pt, CCQArea* pArea, int 
 	setMbr();
 }
 
+CCQObject::CCQObject(int objtype, int speedtype, PointF pt, CCQArea* pArea, int trjtype, int kmh, double _vx, double _vy)
+{
+}
+
 CCQObject::~CCQObject()
 {
 	delete m_pPathPen;
@@ -367,60 +371,62 @@ void CCQObject::setAbstractPath(PointF pt, CCQArea* pArea, int trjtype)
 	m_AbstractPath.clear();
 	m_AbstractPath.push_back(pt);
 
-	PointF tp;
-	if (trjtype != TRJTYPE5)
-	{
-		// 우회가 아니면 일단 시작점 pt와 영역내 진입점 tp를 m_AbstractPath에 추가한다.
-		tp = pArea->getApproachPoint(pt);
-		m_AbstractPath.push_back(tp);
-	}
+	PointF finalP;
+	finalP.X = m_initPoint.X + (SIMU_TIME * m_vx)
+	//PointF tp;
+	//if (trjtype != TRJTYPE5)
+	//{
+	//	// 우회가 아니면 일단 시작점 pt와 영역내 진입점 tp를 m_AbstractPath에 추가한다.
+	//	tp = pArea->getApproachPoint(pt);
+	//	m_AbstractPath.push_back(tp);
+	//}
 
-	if (trjtype == TRJTYPE1)	// 진입인 경우 그냥 리턴
-		return;
-	else if (trjtype == TRJTYPE2) // 통과인 경우
-	{
-		// 직선의 각도에 -20 ~ 20도 사이의 랜덤 값을 더해서 각도를 설정
-		double angle = CUtil::getAngle(m_AbstractPath[0], m_AbstractPath[1]) + (CUtil::getRandomLong(0, 40) - 20);
-		tp = pArea->getRetreatPoint(m_AbstractPath[1], angle, TRUE);	// 화면 Map MBR과 만나는 점
-		m_AbstractPath.push_back(tp);
-	}
-	else if (trjtype == TRJTYPE3) // U-Turn인 경우m_char
-	{
-		// 직선의 각도에 180도를 더한 뒤 -20 ~ 20도 사이의 랜덤 값을 추가로 더해서 각도를 설정
-		double angle = CUtil::getAngle(m_AbstractPath[0], m_AbstractPath[1]) + (CUtil::getRandomLong(0, 40) - 20);
-		angle += 180.0;
-		if (360.0 <= angle)	angle -= 360.0;
+	//if (trjtype == TRJTYPE1)	// 진입인 경우 그냥 리턴
+	//	return;
+	//else if (trjtype == TRJTYPE2) // 통과인 경우
+	//{
+	//	// 직선의 각도에 -20 ~ 20도 사이의 랜덤 값을 더해서 각도를 설정
+	//	double angle = CUtil::getAngle(m_AbstractPath[0], m_AbstractPath[1]) + (CUtil::getRandomLong(0, 40) - 20);
+	//	tp = pArea->getRetreatPoint(m_AbstractPath[1], angle, TRUE);	// 화면 Map MBR과 만나는 점
+	//	m_AbstractPath.push_back(tp);
+	//}
+	//else if (trjtype == TRJTYPE3) // U-Turn인 경우m_char
+	//{
+	//	// 직선의 각도에 180도를 더한 뒤 -20 ~ 20도 사이의 랜덤 값을 추가로 더해서 각도를 설정
+	//	double angle = CUtil::getAngle(m_AbstractPath[0], m_AbstractPath[1]) + (CUtil::getRandomLong(0, 40) - 20);
+	//	angle += 180.0;
+	//	if (360.0 <= angle)	angle -= 360.0;
 
-		tp = pArea->getRetreatPoint(m_AbstractPath[1], angle, TRUE);	// 화면 Map MBR과 만나는 점
-		m_AbstractPath.push_back(tp);
-	}
-	else if (trjtype == TRJTYPE4)	// 통과 - U-Turn - 통과
-	{
-		// 직선의 각도에 -20 ~ 20도 사이의 랜덤 값을 더해서 각도를 설정
-		double angle = CUtil::getAngle(m_AbstractPath[0], m_AbstractPath[1]) + (CUtil::getRandomLong(0, 40) - 20);
-		tp = pArea->getRetreatPoint(m_AbstractPath[1], angle, FALSE);	// CQ 영역 외부의 임의의 점
-		m_AbstractPath.push_back(tp);
+	//	tp = pArea->getRetreatPoint(m_AbstractPath[1], angle, TRUE);	// 화면 Map MBR과 만나는 점
+	//	m_AbstractPath.push_back(tp);
+	//}
+	//else if (trjtype == TRJTYPE4)	// 통과 - U-Turn - 통과
+	//{
+	//	// 직선의 각도에 -20 ~ 20도 사이의 랜덤 값을 더해서 각도를 설정
+	//	double angle = CUtil::getAngle(m_AbstractPath[0], m_AbstractPath[1]) + (CUtil::getRandomLong(0, 40) - 20);
+	//	tp = pArea->getRetreatPoint(m_AbstractPath[1], angle, FALSE);	// CQ 영역 외부의 임의의 점
+	//	m_AbstractPath.push_back(tp);
 
-		// 외부점 tp를 시작점으로 CQ 진입점 설정
-		tp = pArea->getApproachPoint(tp);
-		m_AbstractPath.push_back(tp);
+	//	// 외부점 tp를 시작점으로 CQ 진입점 설정
+	//	tp = pArea->getApproachPoint(tp);
+	//	m_AbstractPath.push_back(tp);
 
-		// 직선의 각도에 -20 ~ 20도 사이의 랜덤 값을 더해서 각도를 설정
-		angle = CUtil::getAngle(m_AbstractPath[2], m_AbstractPath[3]) + (CUtil::getRandomLong(0, 40) - 20);
-		tp = pArea->getRetreatPoint(m_AbstractPath[3], angle, TRUE);	// 화면 Map MBR과 만나는 점
-		m_AbstractPath.push_back(tp);
-	}
-	else	// 우회 (TRJTYPE5)
-	{
-		tp = pArea->getDetourPoint(m_AbstractPath);
-		m_AbstractPath.push_back(tp);
+	//	// 직선의 각도에 -20 ~ 20도 사이의 랜덤 값을 더해서 각도를 설정
+	//	angle = CUtil::getAngle(m_AbstractPath[2], m_AbstractPath[3]) + (CUtil::getRandomLong(0, 40) - 20);
+	//	tp = pArea->getRetreatPoint(m_AbstractPath[3], angle, TRUE);	// 화면 Map MBR과 만나는 점
+	//	m_AbstractPath.push_back(tp);
+	//}
+	//else	// 우회 (TRJTYPE5)
+	//{
+	//	tp = pArea->getDetourPoint(m_AbstractPath);
+	//	m_AbstractPath.push_back(tp);
 
-		// 직선의 각도에 -20 ~ 20도 사이의 랜덤 값을 더해서 각도를 설정
-		double angle = CUtil::getAngle(m_AbstractPath[0], m_AbstractPath[1]) + (CUtil::getRandomLong(0, 40) - 20);
+	//	// 직선의 각도에 -20 ~ 20도 사이의 랜덤 값을 더해서 각도를 설정
+	//	double angle = CUtil::getAngle(m_AbstractPath[0], m_AbstractPath[1]) + (CUtil::getRandomLong(0, 40) - 20);
 
-		tp = pArea->getRetreatPoint(tp, angle, TRUE);	// 화면 Map MBR과 만나는 점
-		m_AbstractPath.push_back(tp);
-	}
+	//	tp = pArea->getRetreatPoint(tp, angle, TRUE);	// 화면 Map MBR과 만나는 점
+	//	m_AbstractPath.push_back(tp);
+	//}
 }
 
 //----------------------------------------------------------------------------------------------------------------------

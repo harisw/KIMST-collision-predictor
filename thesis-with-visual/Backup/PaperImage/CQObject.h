@@ -4,13 +4,14 @@ class CCQArea;
 class CCQObject
 {
 public:
-	BOOL m_bFriend;						// TRUE면 아군, FALSE면 적군
 	int m_objtype;						// 공중, 함선, 어선, 잠수함
 	int m_speedtype;					// 저속, 중속, 고속
 	int m_id;
 	int m_trjtype;
 	PointF m_initPoint;
 	int m_kmh;
+	int m_vx;
+	int m_vy;
 	RectF m_mbr;						// 지도좌표로 경로의 MBR
 	wstring m_charID;
 	BOOL m_isFocused = false;
@@ -37,7 +38,7 @@ private:
 	void drawobject(Graphics& g, CView* pView, int idx);
 
 public:
-	CCQObject(int objtype, int speedtype, PointF pt, CCQArea* pArea, int trjtype, int kmh, BOOL bFriend = TRUE);
+	CCQObject(int objtype, int speedtype, PointF pt, CCQArea* pArea, int trjtype, int kmh, double _vx, double _vy);
 	~CCQObject();
 
 	void draw(Graphics& g, CView* pView);
