@@ -24,7 +24,7 @@ private:
 
 	void setAbstractPath(PointF pt, CCQArea* pArea, int type);
 	void setConcreteDrawPath(double speed);
-	void setConcreteMovePath(double speed);
+	void setConcreteMovePath();
 	void setMbr();
 
 	Pen* m_pFocusedPen;
@@ -38,7 +38,7 @@ private:
 	void drawobject(Graphics& g, CView* pView, int idx);
 
 public:
-	CCQObject(int objtype, int speedtype, PointF pt, CCQArea* pArea, int trjtype, int kmh, double _vx, double _vy);
+	CCQObject(int objtype, int speedtype, PointF pt, CCQArea* pArea, int trjtype, double _vx, double _vy);
 	~CCQObject();
 
 	void draw(Graphics& g, CView* pView);

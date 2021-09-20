@@ -206,8 +206,8 @@ void CCQDialog::setDrawOptions()
 
 BOOL CCQDialog::isDrawObject(CCQObject* pObj)
 {
-	if (pObj->m_bFriend && !m_bRFO)		return FALSE;
-	if (!pObj->m_bFriend && !m_bREO)	return FALSE;
+	/*if (pObj->m_bFriend && !m_bRFO)		return FALSE;
+	if (!pObj->m_bFriend && !m_bREO)	return FALSE;*/
 
 	return *(m_bool2[pObj->m_objtype][pObj->m_speedtype]);
 }
@@ -498,13 +498,15 @@ UINT ThreadFunc(LPVOID pParam)
 			for (int k = 0; k < count; k++)
 			{
 				//int trjtype = CUtil::getRandomLong(102, 105);		// 진입만 있는 객체는 없으므로 TRJTYPE1(101)타입은 생략
-				int speed = CUtil::getRandomLong(mins, maxs);
+				int speedX = CUtil::getRandomLong(mins, maxs);
+				int speedY = CUtil::getRandomLong(mins, maxs);
+
 
 				tp = pDlg->makeStartPoint(vec, w, h);
 				CCQArea* tArea = pDlg->findNearestArea(vec, tp);
 
 				// speed km/h 속도를 가지고 trjtype의 경로를 따라 이동하는 tp위치의 divs[i][0] 객체 생성
-				CCQObject* pObj = new CCQObject(i, j, tp, tArea, trjtype, speed, TRUE);
+				CCQObject* pObj = new CCQObject(i, j, tp, tArea, trjtype, speedX, speedY);
 				pObj->m_id = curr_obj_id;
 				curr_obj_id++;
 				pDlg->setupObjData(pObj);
@@ -531,14 +533,14 @@ UINT ThreadFunc(LPVOID pParam)
 				for (int k = 0; k < count; k++)
 				{
 					//int trjtype = TRJTYPE5;;
-					if (k == 0)	trjtype = CUtil::getRandomLong(102, 104);
-					int speed = CUtil::getRandomLong(mins, maxs);
+					int speedX = CUtil::getRandomLong(mins, maxs);
+					int speedY = CUtil::getRandomLong(mins, maxs);
 
 					tp = pDlg->makeStartPoint(vec, w, h);
 					CCQArea* tArea = pDlg->findNearestArea(vec, tp);
 
 					// speed km/h 속도를 가지고 trjtype의 경로를 따라 이동하는 tp위치의 divs[i][0] 객체 생성
-					CCQObject* pObj = new CCQObject(i, j, tp, tArea, trjtype, speed, FALSE);
+					CCQObject* pObj = new CCQObject(i, j, tp, tArea, trjtype, speedX, speedY);
 					pObj->m_id = curr_obj_id;
 					curr_obj_id++;
 					pDlg->setupObjData(pObj);

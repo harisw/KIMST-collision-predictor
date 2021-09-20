@@ -188,7 +188,7 @@ void CPaperImageDoc::On32806()
 		outfile << m_CQObjects[i]->m_id << "|" << m_CQObjects[i]->m_objtype << "|" << m_CQObjects[i]->m_speedtype
 			<< "|" << pX.str() << "," << pY.str()
 			<< "|" << m_CQObjects[i]->m_trjtype
-			<< "|" << m_CQObjects[i]->m_kmh << "|" << m_CQObjects[i]->m_bFriend;
+			<< "|" << m_CQObjects[i]->m_kmh;
 		if (i+1 < m_CQObjects.size())
 			outfile << endl;
 	}

@@ -9,27 +9,22 @@
 
 #pragma region CCQObject
 
-CCQObject::CCQObject(int objtype, int speedtype, PointF pt, CCQArea* pArea, int trjtype, int kmh, BOOL bFriend)
+CCQObject::CCQObject(int objtype, int speedtype, PointF pt, CCQArea* pArea, int trjtype, double _vx, double _vy)
 	: m_objtype(objtype)
 	, m_speedtype(speedtype)
-	, m_bFriend(bFriend)
-	, m_kmh(kmh)
 	, m_initPoint(PointF(pt.X, pt.Y))
 	, m_trjtype(trjtype)
+	, m_vx(_vx)
+	, m_vy(_vy)
 {
 	setAbstractPath(pt, pArea, trjtype);
 
 	// 속도는 meter단위로 변경
-	double ms = (double)kmh * 10.0 / 36.0;	// m/s
-	setConcreteDrawPath(ms);
-	setConcreteMovePath(ms);
+	//setConcreteDrawPath(ms);
+	setConcreteMovePath();
 
 	setResource();
 	setMbr();
-}
-
-CCQObject::CCQObject(int objtype, int speedtype, PointF pt, CCQArea* pArea, int trjtype, int kmh, double _vx, double _vy)
-{
 }
 
 CCQObject::~CCQObject()
@@ -70,16 +65,9 @@ int CCQObject::getMoveCount()
 
 void CCQObject::setResource()
 {
-	if (m_bFriend)
-	{
-		m_pPathPen = new Pen(Color(0, 0, 128));
-		m_pBrush = new SolidBrush(Color(0, 0, 128));
-	}
-	else
-	{
-		m_pPathPen = new Pen(Color(128, 0, 0));
-		m_pBrush = new SolidBrush(Color(128, 0, 0));
-	}
+	m_pPathPen = new Pen(Color(128, 0, 0));
+	m_pBrush = new SolidBrush(Color(128, 0, 0));
+
 	m_pPathPen->SetDashStyle(DashStyle::DashStyleDot);
 
 	m_pPen = new Pen(Color(128, 128, 128));
@@ -343,22 +331,24 @@ void CCQObject::setConcreteDrawPath(double speed)
 	m_ConcreteDrawPath.push_back(m_AbstractPath[size-1]);
 }
 
-void CCQObject::setConcreteMovePath(double speed)
+void CCQObject::setConcreteMovePath()
 {
 	m_ConcreteMovePath.clear();
 	m_ConcreteMovePath.push_back(m_ConcreteDrawPath[0]);
 
-	double offsetlen = speed * (double)MOVEINTERVAL;	// 60초간격
+	//double offsetlen = speed * (double)MOVEINTERVAL;	// 60초간격
 
-	double pathlen = CUtil::distance(m_ConcreteDrawPath);
-	int count = (int)(pathlen / offsetlen) + 1;
+	//double pathlen = CUtil::distance(m_ConcreteDrawPath);
+	//int count = (int)(pathlen / offsetlen) + 1;
 
-	if (offsetlen == 0.0)
-		int ddd = 0;
+	//if (offsetlen == 0.0)
+	//	int ddd = 0;
 
-	for (int i = 1; i < count; i++)
+	for (int i = 1; i < SIMU_TIME; i++)
 	{
-		PointF pt = CUtil::getOffsetPoint(m_ConcreteDrawPath, offsetlen * i);
+		PointF pt;
+		pt.X = m_initPoint.X + (i * m_vx);
+		pt.Y = m_initPoint.Y + (i * m_vy);
 		m_ConcreteMovePath.push_back(pt);
 	}
 }
@@ -372,7 +362,10 @@ void CCQObject::setAbstractPath(PointF pt, CCQArea* pArea, int trjtype)
 	m_AbstractPath.push_back(pt);
 
 	PointF finalP;
-	finalP.X = m_initPoint.X + (SIMU_TIME * m_vx)
+	finalP.X = m_initPoint.X + (SIMU_TIME * m_vx);
+	finalP.Y = m_initPoint.Y + (SIMU_TIME * m_vy);
+	
+	m_AbstractPath.push_back(finalP);
 	//PointF tp;
 	//if (trjtype != TRJTYPE5)
 	//{
