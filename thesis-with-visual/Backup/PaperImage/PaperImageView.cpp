@@ -308,15 +308,17 @@ void CPaperImageView::OnDraw(CDC* pDC)
 
 	int size = (int)pDoc->m_CQObjects.size();
 
-
+	BOOL hasCollide = false;
 	//Check for naive collision
 	for (int i = 0; i < size; i++) {
 		stringstream output_stream;
 		if (pDoc->m_CQObjects[i]->isCollide(pDoc->m_CQAreas[0], this)) {
 			output_stream << "Object #" << i << ", at" << currentT << endl;
 			queue_ev.push(output_stream.str());
+			hasCollide = true;
 		}
 	}
+	
 	//------------------------------------------------------------------------
 	// Draw Object
 
@@ -348,6 +350,7 @@ void CPaperImageView::OnDraw(CDC* pDC)
 	}
 	//------------------------------------------------------------------------
 	// Draw CQArea
+	if (currentT < SIMU_TIME)
 	{
 		int size = (int)pDoc->m_CQAreas.size();
 		for (int i = 0; i < size; i++)
@@ -355,11 +358,13 @@ void CPaperImageView::OnDraw(CDC* pDC)
 			pDoc->m_CQAreas[i]->draw(g, this);
 			pDoc->m_CQAreas[i]->moveOurVessel();
 		}
-	}
 	pDC->BitBlt(0, 0, m_rect.Width()+1, m_rect.Height()+1, m_pDC, 0, 0, SRCCOPY);
-	Sleep(500);
+	if (hasCollide)
+		m_simuOutDlg->SendMessage(WM_UPDATE_EVENT);
+	Sleep(150);
 	if (currentT != 0)
 		currentT++;
+	}
 }
 #pragma endregion
 
