@@ -354,6 +354,11 @@ void CCQObject::setConcreteMovePath()
 	}
 }
 
+BOOL CCQObject::isCollide(CCQArea* ourVessel, CView* pView) {
+	CPaperImageView* pV = (CPaperImageView*)pView;
+	PointF curPoint = m_ConcreteMovePath[pV->m_pSimulDlg->m_nIdx];
+	return ourVessel->isIn(curPoint);
+}
 //----------------------------------------------------------------------------------------------------------------------
 
 void CCQObject::setAbstractPath(PointF pt, CCQArea* pArea, int trjtype)

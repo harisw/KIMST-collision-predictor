@@ -52,4 +52,6 @@ public:
 	{
 		return &m_ConcreteMovePath;
 	}
+	BOOL isCollide(CCQArea* ourVessel, CView* pView);
+
 };

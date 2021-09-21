@@ -65,6 +65,7 @@ public:
 	BOOL		m_bRSMO_RHSO;
 	//---------------------------------------------------------------------------------------
 	int obj_num;
+	int currentT = -1;
 // 작업입니다.
 public:
 	void ReleaseResources();
@@ -104,10 +105,6 @@ protected:
 protected:
 	DECLARE_MESSAGE_MAP()
 public:
-	afx_msg void OnButtonPathdot();
-	afx_msg void OnUpdateButtonPathdot(CCmdUI* pCmdUI);
-	afx_msg void OnButtonGrid();
-	afx_msg void OnUpdateButtonGrid(CCmdUI* pCmdUI);
 	afx_msg void OnMouseMove(UINT nFlags, CPoint point);
 	//afx_msg BOOL OnMouseWheel(UINT nFlags, short zDelta, CPoint pt);
 	afx_msg void OnRButtonDown(UINT nFlags, CPoint point);

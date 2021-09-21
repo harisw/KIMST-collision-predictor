@@ -25,7 +25,7 @@
 #include "RuleDlg.h"
 #include "ObjListDlg.h"
 #include "SimuOutDlg.h"
-
+#include <sstream>
 #pragma endregion
 
 #ifdef _DEBUG
@@ -40,10 +40,6 @@ BEGIN_MESSAGE_MAP(CPaperImageView, CView)
 	ON_WM_MOUSEMOVE()
 	ON_WM_MOUSEWHEEL()
 	ON_WM_RBUTTONDOWN()
-	ON_COMMAND(ID_BUTTON_PATHDOT, &CPaperImageView::OnButtonPathdot)
-	ON_UPDATE_COMMAND_UI(ID_BUTTON_PATHDOT, &CPaperImageView::OnUpdateButtonPathdot)
-	ON_COMMAND(ID_BUTTON_GRID, &CPaperImageView::OnButtonGrid)
-	ON_UPDATE_COMMAND_UI(ID_BUTTON_GRID, &CPaperImageView::OnUpdateButtonGrid)
 	ON_COMMAND(ID_BUTTON_C, &CPaperImageView::OnButtonC)
 	ON_MESSAGE(WM_SIMUL, &CPaperImageView::OnSimul)
 	ON_WM_LBUTTONDOWN()
@@ -310,14 +306,25 @@ void CPaperImageView::OnDraw(CDC* pDC)
 
 	if (m_bShowGrid)	DrawGrid(g);
 
+	int size = (int)pDoc->m_CQObjects.size();
+
+
+	//Check for naive collision
+	for (int i = 0; i < size; i++) {
+		stringstream output_stream;
+		if (pDoc->m_CQObjects[i]->isCollide(pDoc->m_CQAreas[0], this)) {
+			output_stream << "Object #" << i << ", at" << currentT << endl;
+			queue_ev.push(output_stream.str());
+		}
+	}
 	//------------------------------------------------------------------------
 	// Draw Object
+
 	{
 		PointF p1 = Scr2Map(m_rect.left, m_rect.top);
 		PointF p2 = Scr2Map(m_rect.right, m_rect.bottom);
 		RectF tr(p1.X, p1.Y, p2.X - p1.X, p2.Y - p1.Y);
 
-		int size = (int)pDoc->m_CQObjects.size();
 
 		int cnt1 = 0;
 		int cnt2 = 0;
@@ -346,10 +353,13 @@ void CPaperImageView::OnDraw(CDC* pDC)
 		for (int i = 0; i < size; i++)
 		{
 			pDoc->m_CQAreas[i]->draw(g, this);
+			pDoc->m_CQAreas[i]->moveOurVessel();
 		}
 	}
 	pDC->BitBlt(0, 0, m_rect.Width()+1, m_rect.Height()+1, m_pDC, 0, 0, SRCCOPY);
 	Sleep(500);
+	if (currentT != 0)
+		currentT++;
 }
 #pragma endregion
 
@@ -430,20 +440,20 @@ afx_msg LRESULT CPaperImageView::OnSimul(WPARAM wParam, LPARAM lParam)
 #pragma region Toolbar-Command-Functions
 //==================================================================================================
 
-void CPaperImageView::OnButtonPathdot()							{	m_bShowDot = !m_bShowDot;	Invalidate(FALSE);}
-void CPaperImageView::OnUpdateButtonPathdot(CCmdUI* pCmdUI)		{	pCmdUI->SetCheck(m_bShowDot);	}
-void CPaperImageView::OnButtonGrid()							{	m_bShowGrid = !m_bShowGrid;	Invalidate(FALSE);}
-void CPaperImageView::OnUpdateButtonGrid(CCmdUI* pCmdUI)		{	pCmdUI->SetCheck(m_bShowGrid);	}
+//void CPaperImageView::OnButtonPathdot()							{	m_bShowDot = !m_bShowDot;	Invalidate(FALSE);}
+//void CPaperImageView::OnUpdateButtonPathdot(CCmdUI* pCmdUI)		{	pCmdUI->SetCheck(m_bShowDot);	}
+//void CPaperImageView::OnButtonGrid()							{	m_bShowGrid = !m_bShowGrid;	Invalidate(FALSE);}
+//void CPaperImageView::OnUpdateButtonGrid(CCmdUI* pCmdUI)		{	pCmdUI->SetCheck(m_bShowGrid);	}
 
 void CPaperImageView::OnButtonC()
 {
 	m_pCQDlg->ShowWindow(SW_SHOW);
 }
 
-void CPaperImageView::SetCQType(int cqTYPE)
-{
-	m_pCQDlg->m_CQTYPE = cqTYPE;
-}
+//void CPaperImageView::SetCQType(int cqTYPE)
+//{
+//	m_pCQDlg->m_CQTYPE = cqTYPE;
+//}
 
 void CPaperImageView::startSimulation()
 {
@@ -452,7 +462,7 @@ void CPaperImageView::startSimulation()
 	
 	m_objListDlg->ShowWindow(SW_SHOW);
 	m_objListDlg->initObjects();
-	//m_pCQDlg->startObject();
+	currentT = 0;
 }
 #pragma endregion
 

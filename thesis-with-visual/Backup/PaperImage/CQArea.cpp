@@ -18,6 +18,9 @@ CCQArea::CCQArea(int CQType, RectF mapRect, REAL x, REAL y, REAL fRadius1, REAL 
 	{
 		m_fRadius[BFZ] = fRadius1;									// 버퍼반지름
 	}
+	m_fCurrentPt = m_fPt;
+	m_vx = _vx;
+	m_vy = _vy;
 }
 
 // CQ영역의 함선위치에 이미지를 그린다.
@@ -29,7 +32,7 @@ void CCQArea::draw(Graphics& g, CView* pView)
 	Pen pen(Color(0, 0, 0));
 	pen.SetWidth(2.0f);
 
-	POINT pt = pV->Map2Scr(m_fPt.X, m_fPt.Y);
+	POINT pt = pV->Map2Scr(m_fCurrentPt.X, m_fCurrentPt.Y);
 	int w = pV->Map2Scr(SHIPWIDTH);
 	int h = pV->Map2Scr(SHIPLENGTH);
 
@@ -39,6 +42,8 @@ void CCQArea::draw(Graphics& g, CView* pView)
 	// 함선의 위치를 십자표시한다.
 	g.DrawLine(&pen, pt.x - 20, pt.y, pt.x + 20, pt.y);
 	g.DrawLine(&pen, pt.x, pt.y - 20, pt.x, pt.y + 20);
+
+	moveOurVessel();
 }
 
 // tp에서 CQArea mbr중 가장 가까운 거리를 리턴
@@ -72,6 +77,12 @@ PointF CCQArea::getMBRCenterPoint()
 	return pt;
 }
 
+void CCQArea::moveOurVessel()
+{
+	m_fCurrentPt.X += m_vx;
+	m_fCurrentPt.Y += m_vy;
+	return;
+}
 #pragma endregion
 
 //------------------------------------------------------------------------------------
@@ -91,7 +102,7 @@ void CCQAreaCircle::draw(Graphics& g, CView* pView)
 {
 	CPaperImageView* pV = (CPaperImageView*)pView;
 
-	POINT cp = pV->Map2Scr(m_fPt.X, m_fPt.Y);
+	POINT cp = pV->Map2Scr(m_fCurrentPt.X, m_fCurrentPt.Y);
 	int r;
 	RectF rect;
 	for (int i = 0; i < 1; i++)
@@ -111,21 +122,21 @@ void CCQAreaCircle::draw(Graphics& g, CView* pView)
 		else		pen.SetDashStyle(DashStyleSolid);
 		g.DrawEllipse(&pen, rect);
 
-		Gdiplus::Font myFont(L"Tahoma", 10);
-		RectF layoutRect(cp.x, cp.y - (REAL)(rect.Height/2)+15.0f, 23.0f, 18.0f);
-		StringFormat format;
-		format.SetAlignment(StringAlignmentCenter);
-		SolidBrush blackBrush(Color(255, 0, 0, 0));
-		g.DrawString(
-			m_RuleID.c_str(),
-			3,
-			&myFont,
-			layoutRect,
-			&format,
-			&blackBrush);
+		//Gdiplus::Font myFont(L"Tahoma", 10);
+		//RectF layoutRect(cp.x, cp.y - (REAL)(rect.Height/2)+15.0f, 23.0f, 18.0f);
+		//StringFormat format;
+		//format.SetAlignment(StringAlignmentCenter);
+		//SolidBrush blackBrush(Color(255, 0, 0, 0));
+		//g.DrawString(
+		//	m_RuleID.c_str(),
+		//	3,
+		//	&myFont,
+		//	layoutRect,
+		//	&format,
+		//	&blackBrush);
 
-		// Draw layoutRect.
-		g.DrawRectangle(&Pen(Color::Red, 3), layoutRect);
+		//// Draw layoutRect.
+		//g.DrawRectangle(&Pen(Color::Red, 3), layoutRect);
 
 
 	}
@@ -134,7 +145,7 @@ void CCQAreaCircle::draw(Graphics& g, CView* pView)
 
 BOOL CCQAreaCircle::isIn(PointF pt)
 {
-	double dist = CUtil::distance(pt.X, pt.Y, m_fPt.X, m_fPt.Y);
+	double dist = CUtil::distance(pt.X, pt.Y, m_fCurrentPt.X, m_fCurrentPt.Y);
 	
 	// 중심점에서의 거리가 원의 버퍼반지름보다 작으면
 	if (dist <= m_fRadius[BFZ])	return TRUE;

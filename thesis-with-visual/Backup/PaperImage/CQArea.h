@@ -6,6 +6,7 @@ public:
 	int		m_CQType;		// Radar, Sonar, Rect
 	RectF	m_mapRect;		// 현재 화면에 보이는 전체 MBR의 지도 좌표
 	PointF	m_fPt;			// CQ가 위치하는 중심좌표
+	PointF m_fCurrentPt;
 	REAL	m_fRadius[2];	// 버퍼 반지름(0:BFZ), CQ 반지름(1:CQZ) ==> 경고반지름이 0.0이면 버퍼 반지름의 0.7로 설정
 	RectF	m_rectf;		// CQArea의 MBR
 	wstring	m_RuleID;
@@ -16,6 +17,7 @@ public:
 
 	double getMinDistance(PointF& tp);
 	PointF getMBRCenterPoint();
+	void moveOurVessel();
 	virtual void draw(Graphics& g, CView* pView);
 
 	// 주어진 점pt가 영역 내에 존재하는지 검사
