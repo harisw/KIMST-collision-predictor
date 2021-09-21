@@ -92,7 +92,7 @@ BOOL RuleDlg::OnInitDialog()
 	GetDlgItem(IDC_EDITVESSEL_X)->SetWindowText(t);
 	t.Format(_T("%f"), mp.Y);
 	GetDlgItem(IDC_EDITVESSEL_Y)->SetWindowText(t);
-	int rad = 100;
+	int rad = VESSEL_RAD;
 	int vx = 50;
 	int vy = 30;
 	t.Format(_T("%d"), rad);
@@ -132,7 +132,7 @@ afx_msg LRESULT RuleDlg::OnGenerateObj(WPARAM wParam, LPARAM lParam)
 		temp = pDoc->m_CQObjects[j];
 		t.Format(_T("%d"), temp->m_id);
 		int nIndex = m_objList.InsertItem(j, t);
-		t.Format(_T("%d"), temp->m_kmh);
+		t.Format(_T("%d, %d"), temp->m_vx, temp->m_vy);
 		m_objList.SetItemText(nIndex, 1, t);
 		//switch (temp->m_speedtype)
 		//{

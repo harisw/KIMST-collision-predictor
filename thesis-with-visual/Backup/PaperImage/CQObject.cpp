@@ -334,7 +334,8 @@ void CCQObject::setConcreteDrawPath(double speed)
 void CCQObject::setConcreteMovePath()
 {
 	m_ConcreteMovePath.clear();
-	m_ConcreteMovePath.push_back(m_ConcreteDrawPath[0]);
+	m_ConcreteMovePath.push_back(m_AbstractPath[0]);
+	/*m_ConcreteMovePath.push_back(m_ConcreteDrawPath[0]);*/
 
 	//double offsetlen = speed * (double)MOVEINTERVAL;	// 60√ ∞£∞›
 

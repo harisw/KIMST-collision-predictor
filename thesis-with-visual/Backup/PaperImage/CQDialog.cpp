@@ -382,8 +382,8 @@ PointF CCQDialog::makeStartPoint(vector<CCQArea*>& vec, int w, int h)
 	int i, size = (int)vec.size();
 	while (1)
 	{
-		int tx = CUtil::getRandomLong(0, w);
-		int ty = CUtil::getRandomLong(0, h);
+		int tx = CUtil::getRandomLong(WINDOW_X_START, w);
+		int ty = CUtil::getRandomLong(WINDOW_Y_START, h);
 
 		tp = pView->Scr2Map(tx, ty);
 
@@ -392,7 +392,7 @@ PointF CCQDialog::makeStartPoint(vector<CCQArea*>& vec, int w, int h)
 		{
 			if (vec[i]->isIn(tp))	break;
 		}
-		if (size <= i)	return tp;
+		return tp;
 	}
 	return PointF(0.0f, 0.0f);
 }

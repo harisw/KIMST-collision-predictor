@@ -186,8 +186,8 @@ void CPaperImageView::initScale()
 	}
 	else
 	{*/
-		m_dMap_Meter = RADAR_MAP_METER;
-		m_dCell_Meter = RADAR_CELL_METER;
+		m_dMap_Meter = MAP_METER;
+		m_dCell_Meter = CELL_METER;
 	//}
 	double temp = M_RECT_W;
 	m_dRate = m_dMap_Meter / M_RECT_W;
@@ -334,18 +334,18 @@ void CPaperImageView::OnDraw(CDC* pDC)
 		for (int i = 0; i < size; i++)
 		{
 
-			// 그리기 대상 레이어가 아니면
-			if (!m_pCQDlg->isDrawObject(pDoc->m_CQObjects[i])) continue;
+			//// 그리기 대상 레이어가 아니면
+			//if (!m_pCQDlg->isDrawObject(pDoc->m_CQObjects[i])) continue;
 
-			// 객체가 화면안에 완전히 들어오지 않으면
-			if (!tr.Contains(pDoc->m_CQObjects[i]->m_mbr))
-			{
-				// 화면 MBR에서 벗어나면
-				if (!tr.IntersectsWith(pDoc->m_CQObjects[i]->m_mbr)) continue;
+			//// 객체가 화면안에 완전히 들어오지 않으면
+			//if (!tr.Contains(pDoc->m_CQObjects[i]->m_mbr))
+			//{
+			//	// 화면 MBR에서 벗어나면
+			//	if (!tr.IntersectsWith(pDoc->m_CQObjects[i]->m_mbr)) continue;
 
-				// 화면 MBR과 경로가 교차하지 않으면
-				if (!CUtil::intersect(tr, pDoc->m_CQObjects[i]->getDrawPath()))	continue;
-			}
+			//	// 화면 MBR과 경로가 교차하지 않으면
+			//	if (!CUtil::intersect(tr, pDoc->m_CQObjects[i]->getDrawPath()))	continue;
+			//}
 			pDoc->m_CQObjects[i]->draw(g, this);
 		}
 	}

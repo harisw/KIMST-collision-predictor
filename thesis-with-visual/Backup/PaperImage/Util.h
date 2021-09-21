@@ -23,6 +23,7 @@
 
 #define SHIPWIDTH		19.0f	// 함선 폭 19m
 #define SHIPLENGTH		156.0f	// 함선 길이 156m
+#define VESSEL_RAD		200
 //#define SHIPWIDTH		15.0f	// 함선 폭 19m
 //#define SHIPLENGTH		136.0f	// 함선 길이 156m
 //==============================================================================
@@ -47,12 +48,14 @@
 
 //==============================================================================
 //Original
-#define RADAR_MAP_METER		20000.0	// 화면에 표시되는 전체 지도 거리(2000km)
-#define RADAR_R_METER	3000.0	// 레이더 반경 (300km)
-#define RADAR_CELL_METER		250.0		// 셀의 가로 간격 (25km)
+#define MAP_METER		20000.0	// 화면에 표시되는 전체 지도 거리(2000km)
+#define R_METER	3000.0	// 레이더 반경 (300km)
+#define CELL_METER		250.0		// 셀의 가로 간격 (25km)
 
 #define ARROWWIDTH		8			// 경로를 그려줄 때 화살표 크기
 
+#define WINDOW_X_START	75
+#define WINDOW_Y_START	20
 //==============================================================================
 
 // 경로 설정을 위한 기본 이동 타입
@@ -76,8 +79,6 @@
 #define DECIMAL_ROUND 1000
 #define M_RECT_W 1200.0
 #define M_RECT_H 760.0
-#define ALPHA_NODE	"Alpha"
-#define BETA_NODE	"Beta"
 //==============================================================================	CUSTOM MESSAGE
 #define WM_GENERATE_OBJ (WM_USER + 500)
 #define WM_UPDATE_EVENT (WM_USER + 501)
