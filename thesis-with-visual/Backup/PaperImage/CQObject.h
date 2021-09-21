@@ -7,7 +7,6 @@ public:
 	int m_id;
 	int m_trjtype;
 	PointF m_initPoint;
-	int m_kmh;
 	int m_vx;
 	int m_vy;
 	RectF m_mbr;						// 지도좌표로 경로의 MBR

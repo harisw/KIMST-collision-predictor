@@ -575,19 +575,14 @@ UINT ImportDataThreadFunc(LPVOID pParam)
 	std::ifstream infile("events.txt");
 	string line, token;
 	vector<int> ids;
-	vector<int> objTypes;
-	vector<int> speedTypes;
 	vector<PointF> initPoints;
 	vector<int> trjTypes;
-	vector<int> kmhs;
-	vector<int> friendTypes;
+	vector < pair<int, int>> speedPairs;
 	int objCounter = 0;
 	while (getline(infile, line)) {
 		std::istringstream tokenizer(line);
 
 		getline(tokenizer, token, '|'); ids.push_back(stoi(token));
-		getline(tokenizer, token, '|'); objTypes.push_back(stoi(token));
-		getline(tokenizer, token, '|'); speedTypes.push_back(stoi(token));
 
 		getline(tokenizer, token, '|');
 		istringstream tokenizer2(token);
@@ -596,8 +591,12 @@ UINT ImportDataThreadFunc(LPVOID pParam)
 		initPoints.push_back(PointF(stoi(x), stoi(y)));
 		
 		getline(tokenizer, token, '|'); trjTypes.push_back(stoi(token));
-		getline(tokenizer, token, '|'); kmhs.push_back(stoi(token));
-		getline(tokenizer, token); friendTypes.push_back(stoi(token));
+
+		getline(tokenizer, token, '|');
+		istringstream tokenizer3(token);
+		string vx, vy;
+		getline(tokenizer3, vx, ','); getline(tokenizer3, vy, ',');
+		speedPairs.push_back(make_pair(stoi(vx), stoi(vy)));
 		objCounter++;
 	}
 	infile.close();
@@ -622,11 +621,9 @@ UINT ImportDataThreadFunc(LPVOID pParam)
 				CCQArea* tArea = pDlg->findNearestArea(vec, tp);
 
 				// speed km/h 속도를 가지고 trjtype의 경로를 따라 이동하는 tp위치의 divs[i][0] 객체 생성
-				/*CCQObject* pObj = new CCQObject(objTypes[obj_id], speedTypes[obj_id], initPoints[obj_id],
-					tArea, trjTypes[obj_id], kmhs[obj_id], friendTypes[obj_id]);
-				pObj->m_id = obj_id;
-				pDlg->setupObjData(pObj);
-				pDoc->m_CQObjects.push_back(pObj);*/
+				CCQObject* pObj = new CCQObject(obj_id, initPoints[obj_id],
+					tArea, trjTypes[obj_id], speedPairs[obj_id].first, speedPairs[obj_id].second);
+				pDoc->m_CQObjects.push_back(pObj);
 				pDlg->SendMessage(WM_ADDOBJECT, pDlg->m_NO_COUNT, rec++);
 				obj_id++;
 			}
@@ -657,11 +654,9 @@ UINT ImportDataThreadFunc(LPVOID pParam)
 					CCQArea* tArea = pDlg->findNearestArea(vec, tp);
 
 					// speed km/h 속도를 가지고 trjtype의 경로를 따라 이동하는 tp위치의 divs[i][0] 객체 생성
-					//CCQObject* pObj = new CCQObject(objTypes[obj_id], speedTypes[obj_id], initPoints[obj_id],
-					//	tArea, trjTypes[obj_id], kmhs[obj_id], friendTypes[obj_id]);
-					/*pObj->m_id = obj_id;
-					pDlg->setupObjData(pObj);
-					pDoc->m_CQObjects.push_back(pObj);*/
+					CCQObject* pObj = new CCQObject(obj_id, initPoints[obj_id],
+						tArea, trjTypes[obj_id], speedPairs[obj_id].first, speedPairs[obj_id].second);
+					pDoc->m_CQObjects.push_back(pObj);
 					pDlg->SendMessage(WM_ADDOBJECT, pDlg->m_NO_COUNT, rec++);
 					obj_id++;
 				}
