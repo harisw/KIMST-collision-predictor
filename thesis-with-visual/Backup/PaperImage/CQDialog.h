@@ -16,9 +16,7 @@ public:
 	PointF makeStartPoint(vector<CCQArea*>& vec, int w, int h);
 	CCQArea* findNearestArea(vector<CCQArea*>& vec, PointF& tp);
 
-	BOOL isDrawObject(CCQObject* pObj);
 	void startObject();
-	void setupObjData(CCQObject* pObj);
 // 대화 상자 데이터입니다.
 #ifdef AFX_DESIGN_TIME
 	enum { IDD = IDD_CCQDIALOG };

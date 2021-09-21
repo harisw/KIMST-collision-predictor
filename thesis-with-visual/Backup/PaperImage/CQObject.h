@@ -4,8 +4,6 @@ class CCQArea;
 class CCQObject
 {
 public:
-	int m_objtype;						// 공중, 함선, 어선, 잠수함
-	int m_speedtype;					// 저속, 중속, 고속
 	int m_id;
 	int m_trjtype;
 	PointF m_initPoint;
@@ -38,7 +36,7 @@ private:
 	void drawobject(Graphics& g, CView* pView, int idx);
 
 public:
-	CCQObject(int objtype, int speedtype, PointF pt, CCQArea* pArea, int trjtype, double _vx, double _vy);
+	CCQObject(int _id, PointF pt, CCQArea* pArea, int trjtype, double _vx, double _vy);
 	~CCQObject();
 
 	void draw(Graphics& g, CView* pView);

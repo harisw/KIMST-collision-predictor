@@ -204,41 +204,9 @@ void CCQDialog::setDrawOptions()
 	pView->Invalidate(FALSE);
 }
 
-BOOL CCQDialog::isDrawObject(CCQObject* pObj)
-{
-	/*if (pObj->m_bFriend && !m_bRFO)		return FALSE;
-	if (!pObj->m_bFriend && !m_bREO)	return FALSE;*/
-
-	return *(m_bool2[pObj->m_objtype][pObj->m_speedtype]);
-}
-
 void CCQDialog::startObject()
 {
 	AfxBeginThread(&ThreadFunc, this);
-}
-
-void CCQDialog::setupObjData(CCQObject* pObj)
-{
-	vector<pair<float, float>> trajectoryList;
-	vector<PointF> movePath = *pObj->getMovePath();
-	int j = 0;
-	int moveStep;
-	switch (pObj->m_speedtype)
-	{
-	case RLSO:
-		moveStep = 30;
-		break;
-	case RMSO:
-		moveStep = 15;
-		break;
-	case RHSO:
-		moveStep = 5;
-		break;
-	}
-	while (j < movePath.size()) {
-		trajectoryList.push_back(make_pair(movePath[j].X, movePath[j].Y));
-		j += moveStep;
-	}
 }
 
 //===================================================================================================
@@ -506,10 +474,8 @@ UINT ThreadFunc(LPVOID pParam)
 				CCQArea* tArea = pDlg->findNearestArea(vec, tp);
 
 				// speed km/h 속도를 가지고 trjtype의 경로를 따라 이동하는 tp위치의 divs[i][0] 객체 생성
-				CCQObject* pObj = new CCQObject(i, j, tp, tArea, trjtype, speedX, speedY);
-				pObj->m_id = curr_obj_id;
+				CCQObject* pObj = new CCQObject(curr_obj_id, tp, tArea, trjtype, speedX, speedY);
 				curr_obj_id++;
-				pDlg->setupObjData(pObj);
 				pDoc->m_CQObjects.push_back(pObj);
 				pDlg->SendMessage(WM_ADDOBJECT, pDlg->m_NO_COUNT, rec++);
 			}
@@ -540,10 +506,8 @@ UINT ThreadFunc(LPVOID pParam)
 					CCQArea* tArea = pDlg->findNearestArea(vec, tp);
 
 					// speed km/h 속도를 가지고 trjtype의 경로를 따라 이동하는 tp위치의 divs[i][0] 객체 생성
-					CCQObject* pObj = new CCQObject(i, j, tp, tArea, trjtype, speedX, speedY);
-					pObj->m_id = curr_obj_id;
+					CCQObject* pObj = new CCQObject(curr_obj_id, tp, tArea, trjtype, speedX, speedY);
 					curr_obj_id++;
-					pDlg->setupObjData(pObj);
 					pDoc->m_CQObjects.push_back(pObj);
 					pDlg->SendMessage(WM_ADDOBJECT, pDlg->m_NO_COUNT, rec++);
 				}
@@ -658,11 +622,11 @@ UINT ImportDataThreadFunc(LPVOID pParam)
 				CCQArea* tArea = pDlg->findNearestArea(vec, tp);
 
 				// speed km/h 속도를 가지고 trjtype의 경로를 따라 이동하는 tp위치의 divs[i][0] 객체 생성
-				CCQObject* pObj = new CCQObject(objTypes[obj_id], speedTypes[obj_id], initPoints[obj_id],
+				/*CCQObject* pObj = new CCQObject(objTypes[obj_id], speedTypes[obj_id], initPoints[obj_id],
 					tArea, trjTypes[obj_id], kmhs[obj_id], friendTypes[obj_id]);
 				pObj->m_id = obj_id;
 				pDlg->setupObjData(pObj);
-				pDoc->m_CQObjects.push_back(pObj);
+				pDoc->m_CQObjects.push_back(pObj);*/
 				pDlg->SendMessage(WM_ADDOBJECT, pDlg->m_NO_COUNT, rec++);
 				obj_id++;
 			}
@@ -693,11 +657,11 @@ UINT ImportDataThreadFunc(LPVOID pParam)
 					CCQArea* tArea = pDlg->findNearestArea(vec, tp);
 
 					// speed km/h 속도를 가지고 trjtype의 경로를 따라 이동하는 tp위치의 divs[i][0] 객체 생성
-					CCQObject* pObj = new CCQObject(objTypes[obj_id], speedTypes[obj_id], initPoints[obj_id],
-						tArea, trjTypes[obj_id], kmhs[obj_id], friendTypes[obj_id]);
-					pObj->m_id = obj_id;
+					//CCQObject* pObj = new CCQObject(objTypes[obj_id], speedTypes[obj_id], initPoints[obj_id],
+					//	tArea, trjTypes[obj_id], kmhs[obj_id], friendTypes[obj_id]);
+					/*pObj->m_id = obj_id;
 					pDlg->setupObjData(pObj);
-					pDoc->m_CQObjects.push_back(pObj);
+					pDoc->m_CQObjects.push_back(pObj);*/
 					pDlg->SendMessage(WM_ADDOBJECT, pDlg->m_NO_COUNT, rec++);
 					obj_id++;
 				}

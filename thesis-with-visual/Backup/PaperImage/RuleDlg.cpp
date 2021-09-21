@@ -134,20 +134,6 @@ afx_msg LRESULT RuleDlg::OnGenerateObj(WPARAM wParam, LPARAM lParam)
 		int nIndex = m_objList.InsertItem(j, t);
 		t.Format(_T("%d, %d"), temp->m_vx, temp->m_vy);
 		m_objList.SetItemText(nIndex, 1, t);
-		//switch (temp->m_speedtype)
-		//{
-		//case RLSO:
-		//	m_objList.SetItemText(nIndex, 1, _T("Low"));
-		//	break;
-		//case RMSO:
-		//	m_objList.SetItemText(nIndex, 1, _T("Medium"));
-		//	break;
-		//case RHSO:
-		//	m_objList.SetItemText(nIndex, 1, _T("High"));
-		//	break;
-		//default:
-		//	break;
-		//}
 		tempVec = *temp->getMovePath();
 		t.Format(_T("%f,   %f"), tempVec[0].X, tempVec[0].Y);
 		m_objList.SetItemText(nIndex, 2, t);

@@ -77,19 +77,7 @@ void ObjListDlg::initObjects()
 	for (int j = 0; j < pDoc->m_CQObjects.size(); j++) {
 		t.Format(_T("%d"), pDoc->m_CQObjects[j]->m_id);
 		int nIndex = m_listCtrl.InsertItem(j, t);
-		switch (pDoc->m_CQObjects[j]->m_speedtype)
-		{
-		case RLSO:
-			m_listCtrl.SetItemText(nIndex, 1, _T("Low Speed"));
-			break;
-		case RMSO:
-			m_listCtrl.SetItemText(nIndex, 1, _T("Medium Speed"));
-			break;
-		case RHSO:
-			m_listCtrl.SetItemText(nIndex, 1, _T("High Speed"));
-			break;
-		default:
-			break;
-		}
+		t.Format(_T("%d, %d"), pDoc->m_CQObjects[j]->m_vx, pDoc->m_CQObjects[j]->m_vy);
+		m_listCtrl .SetItemText(nIndex, 1, t);
 	}
 }

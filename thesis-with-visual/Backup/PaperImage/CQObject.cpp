@@ -9,9 +9,8 @@
 
 #pragma region CCQObject
 
-CCQObject::CCQObject(int objtype, int speedtype, PointF pt, CCQArea* pArea, int trjtype, double _vx, double _vy)
-	: m_objtype(objtype)
-	, m_speedtype(speedtype)
+CCQObject::CCQObject(int _id, PointF pt, CCQArea* pArea, int trjtype, double _vx, double _vy)
+	: m_id(_id)
 	, m_initPoint(PointF(pt.X, pt.Y))
 	, m_trjtype(trjtype)
 	, m_vx(_vx)
@@ -267,7 +266,6 @@ void CCQObject::setConcreteDrawPath(double speed)
 	}
 
 	int gf = 1;
-	if (m_objtype == RAO) gf = CUtil::getRandomLong(1, 5);
 
 	double r = CUtil::getRadius(speed, gf);		// speed일때 g_Force가 gf인 경우 회전 반경 (meter)
 	if (r <= 0.0)

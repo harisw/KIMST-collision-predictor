@@ -180,7 +180,7 @@ void CPaperImageDoc::On32806()
 		exit(1);
 	}
 
-	for (int i = 0; i < m_CQObjects.size(); ++i) {
+	/*for (int i = 0; i < m_CQObjects.size(); ++i) {
 		stringstream pX, pY;
 		pX << fixed << setprecision(4) << m_CQObjects[i]->m_initPoint.X;
 		pY << fixed << setprecision(4) << m_CQObjects[i]->m_initPoint.Y;
@@ -191,7 +191,7 @@ void CPaperImageDoc::On32806()
 			<< "|" << m_CQObjects[i]->m_kmh;
 		if (i+1 < m_CQObjects.size())
 			outfile << endl;
-	}
+	}*/
 	outfile.close();
 	// TODO: Add your command handler code here
 }
