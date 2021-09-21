@@ -110,26 +110,8 @@ public:
 	afx_msg void OnUpdateButtonGrid(CCmdUI* pCmdUI);
 	afx_msg void OnMouseMove(UINT nFlags, CPoint point);
 	//afx_msg BOOL OnMouseWheel(UINT nFlags, short zDelta, CPoint pt);
-	afx_msg void OnButtonInit();
 	afx_msg void OnRButtonDown(UINT nFlags, CPoint point);
-	afx_msg void OnButtonC1();
-	afx_msg void OnButtonC2();
-	afx_msg void OnButtonC3();
-	afx_msg void OnButtonC4();
-	afx_msg void OnButtonC5();
-	afx_msg void OnButtonA1();
-	afx_msg void OnButtonA2();
-	afx_msg void OnButtonA3();
-	afx_msg void OnButtonA4();
-	afx_msg void OnButtonA5();
-	afx_msg void OnButtonR1();
-	afx_msg void OnButtonR2();
-	afx_msg void OnButtonR3();
-	afx_msg void OnButtonR4();
-	afx_msg void OnButtonR5();
 	afx_msg void OnButtonC();
-	afx_msg void OnButtonS();
-	afx_msg void OnButtonR();
 
 	void SetCQType(int cqTYPE);
 
@@ -138,7 +120,6 @@ public:
 protected:
 	afx_msg LRESULT OnSimul(WPARAM wParam, LPARAM lParam);
 public:
-	afx_msg void OnButtonZe();
 	virtual void OnInitialUpdate();
 	afx_msg void OnLButtonDown(UINT nFlags, CPoint point);
 };
