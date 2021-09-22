@@ -313,7 +313,7 @@ void CPaperImageView::OnDraw(CDC* pDC)
 	for (int i = 0; i < size; i++) {
 		stringstream output_stream;
 		if (pDoc->m_CQObjects[i]->isCollide(pDoc->m_CQAreas[0], this)) {
-			output_stream << "Object #" << i << ", at" << currentT << endl;
+			output_stream << "Object #" << to_string(i) << ", at " << to_string(currentT) << endl;
 			queue_ev.push(output_stream.str());
 			hasCollide = true;
 		}
@@ -350,7 +350,7 @@ void CPaperImageView::OnDraw(CDC* pDC)
 	}
 	//------------------------------------------------------------------------
 	// Draw CQArea
-	if (currentT < SIMU_TIME)
+	if (currentT <= SIMU_TIME)
 	{
 		int size = (int)pDoc->m_CQAreas.size();
 		for (int i = 0; i < size; i++)
@@ -362,8 +362,7 @@ void CPaperImageView::OnDraw(CDC* pDC)
 	if (hasCollide)
 		m_simuOutDlg->SendMessage(WM_UPDATE_EVENT);
 	Sleep(150);
-	if (currentT != 0)
-		currentT++;
+	currentT++;
 	}
 }
 #pragma endregion

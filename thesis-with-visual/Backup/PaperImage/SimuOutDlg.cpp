@@ -30,6 +30,7 @@ void SimuOutDlg::DoDataExchange(CDataExchange* pDX)
 
 BEGIN_MESSAGE_MAP(SimuOutDlg, CDialogEx)
 	ON_WM_TIMER()
+	ON_MESSAGE(WM_UPDATE_EVENT, &SimuOutDlg::OnUpdateEvent)
 END_MESSAGE_MAP()
 
 
@@ -46,26 +47,6 @@ BOOL SimuOutDlg::OnInitDialog()
 	
 	return TRUE;  // return TRUE unless you set the focus to a control
 				  // EXCEPTION: OCX Property Pages should return FALSE
-}
-
-
-void SimuOutDlg::OnTimer(UINT_PTR nIDEvent)
-{
-	
-	switch (nIDEvent)
-	{
-	case IDT_TIMER_UPDATE_EVENT:
-		while (!queue_ev.empty()) {
-			string topE = queue_ev.front();
-			m_resultList.InsertItem(matchCount, wstring(topE.begin(), topE.end()).c_str());
-			matchCount++;
-			queue_ev.pop();
-		}
-		break;
-	default:
-		break;
-	}
-	CDialogEx::OnTimer(nIDEvent);
 }
 
 afx_msg LRESULT SimuOutDlg::OnUpdateEvent(WPARAM wParam, LPARAM lParam)

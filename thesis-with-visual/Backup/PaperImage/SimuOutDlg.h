@@ -25,7 +25,6 @@ public:
 	virtual BOOL OnInitDialog();
 	CListCtrl m_resultList;
 	int matchCount = 0;
-	afx_msg void OnTimer(UINT_PTR nIDEvent);
 	int matchTimeOut = 0;
 private:
 protected:

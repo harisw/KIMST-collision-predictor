@@ -599,6 +599,10 @@ UINT ImportDataThreadFunc(LPVOID pParam)
 		speedPairs.push_back(make_pair(stoi(vx), stoi(vy)));
 		objCounter++;
 	}
+	if (objCounter == 0) {
+		pDlg->MessageBox(L"ERROR", L"Empty file", MB_OK | MB_ICONERROR);
+	}
+
 	infile.close();
 	int obj_id = 0;
 	PointF tp;
