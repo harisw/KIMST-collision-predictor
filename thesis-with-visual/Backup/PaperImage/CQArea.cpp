@@ -83,6 +83,19 @@ void CCQArea::moveOurVessel()
 	m_fCurrentPt.Y += m_vy;
 	return;
 }
+
+void CCQArea::getEndPoint()
+{
+	m_fEndPt.X = m_fPt.X + (SIMU_TIME * m_vx);
+	m_fEndPt.Y = m_fPt.Y + (SIMU_TIME * m_vy);
+	return;
+}
+
+void CCQArea::getBTPoints()
+{
+	return;
+}
+
 #pragma endregion
 
 //------------------------------------------------------------------------------------
