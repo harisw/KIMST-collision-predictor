@@ -10,7 +10,7 @@ class CSimulDlg;
 class RuleDlg;
 class ObjListDlg;
 class SimuOutDlg;
-
+class TPRTree;
 class CPaperImageView : public CView
 {
 protected: // serialization에서만 만들어집니다.
@@ -66,6 +66,7 @@ public:
 	//---------------------------------------------------------------------------------------
 	int obj_num;
 	int currentT = -1;
+	TPRTree* myTPR;
 // 작업입니다.
 public:
 	void ReleaseResources();

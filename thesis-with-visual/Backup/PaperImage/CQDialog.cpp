@@ -11,6 +11,7 @@
 #include "CQObject.h"
 #include "CQArea.h"
 #include "RuleDlg.h"
+#include "CEntry.h"
 #include <sstream>
 
 #define WM_ADDOBJECT	(WM_USER + 1)
@@ -475,6 +476,7 @@ UINT ThreadFunc(LPVOID pParam)
 
 				// speed km/h 속도를 가지고 trjtype의 경로를 따라 이동하는 tp위치의 divs[i][0] 객체 생성
 				CCQObject* pObj = new CCQObject(curr_obj_id, tp, tArea, trjtype, speedX, speedY);
+
 				curr_obj_id++;
 				pDoc->m_CQObjects.push_back(pObj);
 				pDlg->SendMessage(WM_ADDOBJECT, pDlg->m_NO_COUNT, rec++);

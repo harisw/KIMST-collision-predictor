@@ -25,6 +25,7 @@
 #include "RuleDlg.h"
 #include "ObjListDlg.h"
 #include "SimuOutDlg.h"
+#include "TPRTree.h"
 #include <sstream>
 #pragma endregion
 
@@ -84,6 +85,8 @@ CPaperImageView::~CPaperImageView()
 
 	m_objListDlg->DestroyWindow();
 	delete m_objListDlg;
+
+	delete myTPR;
 }
 
 void CPaperImageView::OnInitialUpdate()
@@ -105,6 +108,7 @@ void CPaperImageView::OnInitialUpdate()
 
 	CMainFrame* pMainWnd = (CMainFrame*)AfxGetMainWnd();
 	m_simuOutDlg = &pMainWnd->m_DockPane.dialog_box;
+	myTPR = new TPRTree();
 }
 
 #pragma endregion
@@ -313,12 +317,23 @@ void CPaperImageView::OnDraw(CDC* pDC)
 	for (int i = 0; i < size; i++) {
 		stringstream output_stream;
 		if (pDoc->m_CQObjects[i]->isCollide(pDoc->m_CQAreas[0], this)) {
-			output_stream << "Object #" << to_string(i) << ", at " << to_string(currentT) << endl;
+			output_stream << "NAIVE Object #" << to_string(i) << ", at " << to_string(currentT) << endl;
 			queue_ev.push(output_stream.str());
 			hasCollide = true;
 		}
 	}
-	
+	//check for TPR collision
+	vector<CEntry> queryResult;
+	CCQArea* ourVessel = pDoc->m_CQAreas[0];
+	myTPR->rangeQueryKNN4(ourVessel->m_fCurrentPt.X, ourVessel->m_fCurrentPt.Y, 0.0, (double)ourVessel->m_fRadius[0], queryResult, currentT);
+	if (!queryResult.empty()) {
+		for (int i = 0; i < queryResult.size(); i++) {
+			stringstream output_stream;
+			output_stream << "TPR Object #" << to_string(queryResult[i].m_id) << ", at " << to_string(currentT) << endl;
+			queue_ev.push(output_stream.str());
+			hasCollide = true;
+		}
+	}
 	//------------------------------------------------------------------------
 	// Draw Object
 
@@ -466,6 +481,12 @@ void CPaperImageView::startSimulation()
 	
 	m_objListDlg->ShowWindow(SW_SHOW);
 	m_objListDlg->initObjects();
+	for (int j = 0; j < pDoc->m_CQObjects.size(); j++) {
+
+		CEntry* newEnt = new CEntry(pDoc->m_CQObjects[j]->m_id, 0, pDoc->m_CQObjects[j]->m_initPoint.X, pDoc->m_CQObjects[j]->m_initPoint.Y,
+			0.0, pDoc->m_CQObjects[j]->m_vx, pDoc->m_CQObjects[j]->m_vy, 0.0);
+		myTPR->Insert(*newEnt);
+	}
 	currentT = 0;
 }
 #pragma endregion
