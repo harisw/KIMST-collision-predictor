@@ -179,29 +179,6 @@ void CCQDialog::setDrawOptions()
 	CPaperImageView* pView = (CPaperImageView*)m_pWnd;
 
 	UpdateData(TRUE);
-	pView->m_bREO = m_bREO;
-	pView->m_bRFO = m_bRFO;
-
-	pView->m_bRAO = m_bRAO;
-	pView->m_bRAO_RLSO = m_bRAO_RLSO;
-	pView->m_bRAO_RLSO = m_bRAO_RLSO;
-	pView->m_bRAO_RHSO = m_bRAO_RHSO;
-
-	pView->m_bRSVO = m_bRSVO;
-	pView->m_bRSVO_RLSO = m_bRSVO_RLSO;
-	pView->m_bRSVO_RMSO = m_bRSVO_RMSO;
-	pView->m_bRSVO_RHSO = m_bRSVO_RHSO;
-
-	pView->m_bRFVO = m_bRFVO;
-	pView->m_bRFVO_RLSO = m_bRFVO_RLSO;
-	pView->m_bRFVO_RMSO = m_bRFVO_RMSO;
-	pView->m_bRFVO_RHSO = m_bRFVO_RHSO;
-
-	pView->m_bRSMO = m_bRSMO;
-	pView->m_bRSMO_RLSO = m_bRSMO_RLSO;
-	pView->m_bRSMO_RMSO = m_bRSMO_RMSO;
-	pView->m_bRSMO_RHSO = m_bRSMO_RHSO;
-
 	pView->Invalidate(FALSE);
 }
 

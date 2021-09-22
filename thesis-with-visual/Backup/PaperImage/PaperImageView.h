@@ -34,7 +34,6 @@ public:
 	double		m_dRate;	// 실제거리(meter) / pixel
 							// 최초 : 900000meter / 900 pixel ==> 1000.0 (지도 좌표를 m_dRate으로 나누면 화면 좌표가 나온다는 의미)
 	PointF		m_centerPt;	// 화면 중심 지도 좌표
-
 	double		m_dMap_Meter;
 	double		m_dCell_Meter;
 
@@ -44,25 +43,25 @@ public:
 	BOOL		m_bShowGrid;	// Grid를 그릴지 말지
 	BOOL		m_bShowDot;		// 객체 경로의 정점을 그릴지 말지
 
-	BOOL		m_bREO;
-	BOOL		m_bRFO;
-	BOOL		m_bALL;
-	BOOL		m_bRAO;
-	BOOL		m_bRAO_RLSO;
-	BOOL		m_bRAO_RMSO;
-	BOOL		m_bRAO_RHSO;
-	BOOL		m_bRSVO;
-	BOOL		m_bRSVO_RLSO;
-	BOOL		m_bRSVO_RMSO;
-	BOOL		m_bRSVO_RHSO;
-	BOOL		m_bRFVO;
-	BOOL		m_bRFVO_RLSO;
-	BOOL		m_bRFVO_RMSO;
-	BOOL		m_bRFVO_RHSO;
-	BOOL		m_bRSMO;
-	BOOL		m_bRSMO_RLSO;
-	BOOL		m_bRSMO_RMSO;
-	BOOL		m_bRSMO_RHSO;
+	//BOOL		m_bREO;
+	//BOOL		m_bRFO;
+	//BOOL		m_bALL;
+	//BOOL		m_bRAO;
+	//BOOL		m_bRAO_RLSO;
+	//BOOL		m_bRAO_RMSO;
+	//BOOL		m_bRAO_RHSO;
+	//BOOL		m_bRSVO;
+	//BOOL		m_bRSVO_RLSO;
+	//BOOL		m_bRSVO_RMSO;
+	//BOOL		m_bRSVO_RHSO;
+	//BOOL		m_bRFVO;
+	//BOOL		m_bRFVO_RLSO;
+	//BOOL		m_bRFVO_RMSO;
+	//BOOL		m_bRFVO_RHSO;
+	//BOOL		m_bRSMO;
+	//BOOL		m_bRSMO_RLSO;
+	//BOOL		m_bRSMO_RMSO;
+	//BOOL		m_bRSMO_RHSO;
 	//---------------------------------------------------------------------------------------
 	int obj_num;
 	int currentT = -1;
@@ -82,7 +81,6 @@ public:
 	void UpdateStatusBar();
 
 	void DrawGrid(Graphics& g);
-	void updateQueue();
 // 재정의입니다.
 public:
 	virtual void OnDraw(CDC* pDC);  // 이 뷰를 그리기 위해 재정의되었습니다.
@@ -94,14 +92,6 @@ public:
 	virtual void AssertValid() const;
 	virtual void Dump(CDumpContext& dc) const;
 #endif
-
-private:
-	void ButtonC(int type);	// Radar
-	void ButtonA(int type);	// Sonar
-	void ButtonR(int type);	// Rectangle
-
-protected:
-
 // 생성된 메시지 맵 함수
 protected:
 	DECLARE_MESSAGE_MAP()
@@ -110,9 +100,6 @@ public:
 	//afx_msg BOOL OnMouseWheel(UINT nFlags, short zDelta, CPoint pt);
 	afx_msg void OnRButtonDown(UINT nFlags, CPoint point);
 	afx_msg void OnButtonC();
-
-	void SetCQType(int cqTYPE);
-
 	void startSimulation();
 
 protected:

@@ -168,17 +168,8 @@ void CPaperImageView::AllocResources(CDC* pDC, int _w, int _h)
 
 void CPaperImageView::initScale()
 {
-	// 최초 화면 가로 거리를 2000km로 설정 ==> 늘리거나 줄이고 싶으면 이 값을 변경하면 됨.
-	/*if (m_pCQDlg->m_CQTYPE == _SONAR_ || m_pCQDlg->m_CQTYPE == _SONAR4_)
-	{
-		m_dMap_Meter = SONAR_MAP_METER;
-		m_dCell_Meter = SONAR_CELL_METER;
-	}
-	else
-	{*/
-		m_dMap_Meter = MAP_METER;
-		m_dCell_Meter = CELL_METER;
-	//}
+	m_dMap_Meter = MAP_METER;
+	m_dCell_Meter = CELL_METER;
 	double temp = M_RECT_W;
 	m_dRate = m_dMap_Meter / M_RECT_W;
 	m_centerPt.X = (REAL)(m_dMap_Meter / 2.0f);
@@ -274,21 +265,16 @@ void CPaperImageView::DrawGrid(Graphics& g)
 	{
 		REAL t = (REAL)(i * m_dCell_Meter);
 
-		// 가로줄
+		//Horizontal
 		p1 = Map2Scr(0.0f, t);
 		p2 = Map2Scr((REAL)m_dMap_Meter, t);
 		g.DrawLine(&pen, p1.x, p1.y, p2.x, p2.y);
 
-		// 세로줄
+		//Vertical
 		p1 = Map2Scr(t, 0.0f);
 		p2 = Map2Scr(t, (REAL)m_dMap_Meter);
 		g.DrawLine(&pen, p1.x, p1.y, p2.x, p2.y);
 	}
-}
-
-void CPaperImageView::updateQueue()
-{
-	m_simuOutDlg->SendMessage(WM_UPDATE_EVENT);
 }
 
 void CPaperImageView::OnDraw(CDC* pDC)
@@ -348,18 +334,6 @@ void CPaperImageView::OnDraw(CDC* pDC)
 		for (int i = 0; i < size; i++)
 		{
 
-			//// 그리기 대상 레이어가 아니면
-			//if (!m_pCQDlg->isDrawObject(pDoc->m_CQObjects[i])) continue;
-
-			//// 객체가 화면안에 완전히 들어오지 않으면
-			//if (!tr.Contains(pDoc->m_CQObjects[i]->m_mbr))
-			//{
-			//	// 화면 MBR에서 벗어나면
-			//	if (!tr.IntersectsWith(pDoc->m_CQObjects[i]->m_mbr)) continue;
-
-			//	// 화면 MBR과 경로가 교차하지 않으면
-			//	if (!CUtil::intersect(tr, pDoc->m_CQObjects[i]->getDrawPath()))	continue;
-			//}
 			pDoc->m_CQObjects[i]->draw(g, this);
 		}
 	}
@@ -458,21 +432,10 @@ afx_msg LRESULT CPaperImageView::OnSimul(WPARAM wParam, LPARAM lParam)
 
 #pragma region Toolbar-Command-Functions
 //==================================================================================================
-
-//void CPaperImageView::OnButtonPathdot()							{	m_bShowDot = !m_bShowDot;	Invalidate(FALSE);}
-//void CPaperImageView::OnUpdateButtonPathdot(CCmdUI* pCmdUI)		{	pCmdUI->SetCheck(m_bShowDot);	}
-//void CPaperImageView::OnButtonGrid()							{	m_bShowGrid = !m_bShowGrid;	Invalidate(FALSE);}
-//void CPaperImageView::OnUpdateButtonGrid(CCmdUI* pCmdUI)		{	pCmdUI->SetCheck(m_bShowGrid);	}
-
 void CPaperImageView::OnButtonC()
 {
 	m_pCQDlg->ShowWindow(SW_SHOW);
 }
-
-//void CPaperImageView::SetCQType(int cqTYPE)
-//{
-//	m_pCQDlg->m_CQTYPE = cqTYPE;
-//}
 
 void CPaperImageView::startSimulation()
 {
