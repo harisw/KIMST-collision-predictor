@@ -3,6 +3,7 @@
 #include "resource.h"
 #include "Util.h"
 #include "PaperImageView.h"
+#include <math.h>
 
 //------------------------------------------------------------------------------------
 
@@ -93,6 +94,14 @@ void CCQArea::getEndPoint()
 
 void CCQArea::getBTPoints()
 {
+	return;
+}
+
+void CCQArea::getMovingAngle()
+{
+	double xGap = m_fEndPt.X - m_fPt.X;
+	double yGap = m_fEndPt.Y - m_fPt.Y;
+	movingAngle = atan2(yGap, xGap);
 	return;
 }
 

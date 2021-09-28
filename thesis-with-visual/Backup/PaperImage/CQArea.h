@@ -14,6 +14,7 @@ public:
 	wstring	m_RuleID;
 	REAL	m_vx;
 	REAL	m_vy;
+	double movingAngle;
 public:
 	CCQArea(int CQType, RectF mapRect, REAL x, REAL y, REAL fRadius1, REAL _vx, REAL _vy);
 
@@ -22,6 +23,7 @@ public:
 	void moveOurVessel();
 	void getEndPoint();
 	void getBTPoints();
+	void getMovingAngle();
 	virtual void draw(Graphics& g, CView* pView);
 
 	// 주어진 점pt가 영역 내에 존재하는지 검사
