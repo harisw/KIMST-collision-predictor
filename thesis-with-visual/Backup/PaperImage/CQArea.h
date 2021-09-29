@@ -8,7 +8,7 @@ public:
 	PointF	m_fPt;			// CQ가 위치하는 중심좌표
 	PointF m_fCurrentPt;
 	PointF m_fEndPt;
-	vector<PointF> BTPoints;
+	vector<PointF> m_BTPoints;
 	REAL	m_fRadius[2];	// 버퍼 반지름(0:BFZ), CQ 반지름(1:CQZ) ==> 경고반지름이 0.0이면 버퍼 반지름의 0.7로 설정
 	RectF	m_rectf;		// CQArea의 MBR
 	wstring	m_RuleID;
@@ -43,6 +43,8 @@ class CCQAreaCircle : public CCQArea
 {
 public:
 	CCQAreaCircle(RectF mapRect, REAL x, REAL y, REAL fRadius1, REAL _vx, REAL _vy);
+
+	void drawBT(Graphics& g, CView* pView);
 
 	void	draw(Graphics& g, CView* pView);
 	BOOL isIn(PointF pt);

@@ -23,7 +23,8 @@
 
 #define SHIPWIDTH		19.0f	// 함선 폭 19m
 #define SHIPLENGTH		156.0f	// 함선 길이 156m
-#define VESSEL_RAD		600
+#define VESSEL_RAD		400
+#define BUFFER_DIST		300
 //#define SHIPWIDTH		15.0f	// 함선 폭 19m
 //#define SHIPLENGTH		136.0f	// 함선 길이 156m
 //==============================================================================

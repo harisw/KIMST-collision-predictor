@@ -20,8 +20,12 @@ CCQArea::CCQArea(int CQType, RectF mapRect, REAL x, REAL y, REAL fRadius1, REAL 
 		m_fRadius[BFZ] = fRadius1;									// 버퍼반지름
 	}
 	m_fCurrentPt = m_fPt;
-	m_vx = _vx;
+	m_vx = 0;
 	m_vy = _vy;
+	//m_vy = 0;
+	getEndPoint();
+	getMovingAngle();
+	getBTPoints();
 }
 
 // CQ영역의 함선위치에 이미지를 그린다.
@@ -43,8 +47,6 @@ void CCQArea::draw(Graphics& g, CView* pView)
 	// 함선의 위치를 십자표시한다.
 	g.DrawLine(&pen, pt.x - 20, pt.y, pt.x + 20, pt.y);
 	g.DrawLine(&pen, pt.x, pt.y - 20, pt.x, pt.y + 20);
-
-	moveOurVessel();
 }
 
 // tp에서 CQArea mbr중 가장 가까운 거리를 리턴
@@ -87,14 +89,40 @@ void CCQArea::moveOurVessel()
 
 void CCQArea::getEndPoint()
 {
-	m_fEndPt.X = m_fPt.X + (SIMU_TIME * m_vx);
-	m_fEndPt.Y = m_fPt.Y + (SIMU_TIME * m_vy);
+	m_fEndPt.X = m_fPt.X + ((SIMU_TIME+1) * m_vx);
+	m_fEndPt.Y = m_fPt.Y + ((SIMU_TIME + 1) * m_vy);
 	return;
 }
 
 void CCQArea::getBTPoints()
 {
-	return;
+	PointF p1, p2, p3, p4;
+	double d = BUFFER_DIST;
+	if (m_vx == 0) {
+		if (m_fEndPt.Y > m_fPt.Y) {
+			p1.X = m_fPt.X - (d / 2);
+			p1.Y = m_fPt.Y - d;
+
+			p2.X = m_fPt.X + (d / 2);
+			p2.Y = m_fPt.Y - d;
+
+			p3.X = m_fEndPt.X - (d / 2);
+			p3.Y = m_fEndPt.Y + d;
+
+			p4.X = m_fEndPt.X + (d / 2);
+			p4.Y = m_fEndPt.Y + d;
+		}
+		else {
+
+		}
+	}
+	else if (m_vy == 0) {
+
+	}
+	//if (movingAngle < 90) {
+	//	p1.X = m_fPt.X;
+	////}
+	m_BTPoints.insert(m_BTPoints.end(), { p1, p2, p3, p4 });
 }
 
 void CCQArea::getMovingAngle()
@@ -102,7 +130,6 @@ void CCQArea::getMovingAngle()
 	double xGap = m_fEndPt.X - m_fPt.X;
 	double yGap = m_fEndPt.Y - m_fPt.Y;
 	movingAngle = atan2(yGap, xGap);
-	return;
 }
 
 #pragma endregion
@@ -118,8 +145,22 @@ CCQAreaCircle::CCQAreaCircle(RectF mapRect, REAL x, REAL y, REAL fRadius1, REAL 
 	m_rectf.Y = y - m_fRadius[BFZ];
 	m_rectf.Width = m_fRadius[BFZ] * 2.0f;
 	m_rectf.Height = m_fRadius[BFZ] * 2.0f;
+
 }
 
+void CCQAreaCircle::drawBT(Graphics& g, CView* pView)
+{
+	CPaperImageView* pV = (CPaperImageView*)pView;
+	int r = pV->Map2Scr(m_fRadius[0]);
+
+	POINT cp1 = pV->Map2Scr(m_BTPoints[0].X, m_BTPoints[0].Y);
+	POINT cp2 = pV->Map2Scr(m_BTPoints[3].X, m_BTPoints[3].Y);
+
+	RectF layoutRect(cp1.x, cp1.y , abs(cp2.x - cp1.x), abs(cp2.y - cp1.y));
+
+	// Draw layoutRect.
+	g.DrawRectangle(&Pen(Color::Red, 4.0f), layoutRect);
+}
 void CCQAreaCircle::draw(Graphics& g, CView* pView)
 {
 	CPaperImageView* pV = (CPaperImageView*)pView;
@@ -145,6 +186,23 @@ void CCQAreaCircle::draw(Graphics& g, CView* pView)
 		g.DrawEllipse(&pen, rect);
 
 	}
+
+	rect.Width = 5;
+	rect.Height = 5;
+	SolidBrush br(Color(96, 225, 225, 225));
+	for (int j = 0; j < m_BTPoints.size(); j++) {
+		cp = pV->Map2Scr(m_BTPoints[j].X, m_BTPoints[j].Y);
+		rect.X = (REAL)(cp.x - 5);
+		rect.Y = (REAL)(cp.y - 5);
+		
+		g.FillEllipse(&br, rect);
+		Pen pen(Color(0, 0, 0), 2.0);
+		pen.SetDashStyle(DashStyleSolid);
+		g.DrawEllipse(&pen, rect);
+	}
+	if (pV->currentT == SIMU_TIME)
+		cout << "HAHAH" << endl;
+	drawBT(g, pView);
 	CCQArea::draw(g, pView);
 }
 
