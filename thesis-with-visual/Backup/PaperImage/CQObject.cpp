@@ -245,6 +245,10 @@ void CCQObject::draw(Graphics& g, CView* pView)
 }
 
 //----------------------------------------------------------------------------------------------------------------------
+void CCQObject::setTrajectoryPoints()
+{
+	m_trjPoints = make_pair(m_AbstractPath.front(), m_AbstractPath.back());
+}
 
 void CCQObject::setConcreteMovePath()
 {

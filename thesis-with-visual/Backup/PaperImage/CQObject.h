@@ -14,6 +14,7 @@ public:
 	BOOL m_isFocused = false;
 	BOOL m_isDetected = false;
 	int secToCheck;
+	pair<PointF, PointF> m_trjPoints;
 private:
 	vector<PointF> m_AbstractPath;		// m_ConcretePath를 만들기 위한 기본 경로
 	vector<PointF> m_ConcreteDrawPath;	// m_AbstractPath에 회전을 위한 좌표를 추가한 경로 (그리기에 사용)
@@ -21,6 +22,7 @@ private:
 
 	void setAbstractPath(PointF pt, CCQArea* pArea, int type);
 	void setConcreteDrawPath(double speed);
+	void setTrajectoryPoints();
 	void setConcreteMovePath();
 	void setMbr();
 
