@@ -230,6 +230,7 @@ void CCQAreaCircle::draw(Graphics& g, CView* pView)
 
 	rect.Width = 5;
 	rect.Height = 5;
+
 	SolidBrush br(Color(96, 225, 0, 0));
 	for (int j = 0; j < m_BTPoints.size(); j++) {
 		cp = pV->Map2Scr(m_BTPoints[j].X, m_BTPoints[j].Y);

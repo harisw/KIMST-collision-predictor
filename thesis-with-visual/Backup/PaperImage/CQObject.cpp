@@ -138,6 +138,16 @@ void CCQObject::drawarrow(Graphics& g, CView* pView, vector<PointF>* path)
 	}
 }
 
+void CCQObject::drawTrajectory(Graphics& g, CView* pView)
+{
+	CPaperImageView* pV = (CPaperImageView*)pView;
+
+	POINT p1 = pV->Map2Scr(m_AbstractPath.front().X, m_AbstractPath.front().Y);
+	POINT p2 = pV->Map2Scr(m_AbstractPath.back().X, m_AbstractPath.back().Y);
+
+	//g.DrawLine()
+	g.DrawLine(m_pFocusedPen, p1.x, p1.y, p2.x, p2.y);
+}
 void CCQObject::drawobject(Graphics& g, CView* pView, int idx)
 {
 	CPaperImageView* pV = (CPaperImageView*)pView;

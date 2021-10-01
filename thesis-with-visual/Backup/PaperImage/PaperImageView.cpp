@@ -335,6 +335,7 @@ void CPaperImageView::OnDraw(CDC* pDC)
 		{
 
 			pDoc->m_CQObjects[i]->draw(g, this);
+			pDoc->m_CQObjects[i]->drawTrajectory(g, this);
 		}
 	}
 	//------------------------------------------------------------------------

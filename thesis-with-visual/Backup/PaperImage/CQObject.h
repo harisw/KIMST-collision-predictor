@@ -52,5 +52,6 @@ public:
 		return &m_ConcreteMovePath;
 	}
 	BOOL isCollide(CCQArea* ourVessel, CView* pView);
+	void drawTrajectory(Graphics& g, CView* pView);
 
 };
