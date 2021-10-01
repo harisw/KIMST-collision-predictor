@@ -49,9 +49,9 @@
 
 //==============================================================================
 //Original
-#define MAP_METER		20000.0	// 화면에 표시되는 전체 지도 거리(2000km)
-#define R_METER	3000.0	// 레이더 반경 (300km)
-#define CELL_METER		250.0		// 셀의 가로 간격 (25km)
+#define MAP_METER		10000.0	// 화면에 표시되는 전체 지도 거리(2000km)
+#define R_METER	2000.0	// 레이더 반경 (300km)
+#define CELL_METER		150.0		// 셀의 가로 간격 (25km)
 
 #define ARROWWIDTH		8			// 경로를 그려줄 때 화살표 크기
 
