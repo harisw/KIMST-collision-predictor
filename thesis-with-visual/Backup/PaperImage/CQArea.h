@@ -14,7 +14,7 @@ public:
 	wstring	m_RuleID;
 	REAL	m_vx;
 	REAL	m_vy;
-	double movingAngle;
+	double theta;
 public:
 	CCQArea(int CQType, RectF mapRect, REAL x, REAL y, REAL fRadius1, REAL _vx, REAL _vy);
 

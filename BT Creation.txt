@@ -1,0 +1,4 @@
+rotated angle formula
+https://stackoverflow.com/questions/1469149/calculating-vertices-of-a-rotated-rectangle
+https://en.wikipedia.org/wiki/Rotation_matrix
+

@@ -20,8 +20,8 @@ CCQArea::CCQArea(int CQType, RectF mapRect, REAL x, REAL y, REAL fRadius1, REAL 
 		m_fRadius[BFZ] = fRadius1;									// 버퍼반지름
 	}
 	m_fCurrentPt = m_fPt;
-	m_vx = 0;
-	m_vy = -_vy;
+	m_vx = _vx;
+	m_vy = _vy;
 	//m_vy = 0;
 	getEndPoint();
 	getMovingAngle();
@@ -98,7 +98,7 @@ void CCQArea::getBTPoints()
 {
 	PointF p1, p2, p3, p4;
 	double d = BUFFER_DIST;
-	if (m_vx == 0) {
+	//if (m_vx == 0) {
 		if (m_fEndPt.Y > m_fPt.Y) {
 			p1.X = m_fPt.X - d;
 			p1.Y = m_fPt.Y - d;
@@ -125,7 +125,7 @@ void CCQArea::getBTPoints()
 			p4.X = m_fEndPt.X + d;
 			p4.Y = m_fEndPt.Y - d;
 		}
-	}
+	/*}
 	else if (m_vy == 0) {
 		if (m_fEndPt.X > m_fPt.X) {
 			p1.X = m_fPt.X - d;
@@ -153,11 +153,17 @@ void CCQArea::getBTPoints()
 			p4.X = m_fEndPt.X - d;
 			p4.Y = m_fEndPt.Y + d;
 		}
-	}
-	//if (movingAngle < 90) {
-	//	p1.X = m_fPt.X;
-	////}
+	}*/
 	m_BTPoints.insert(m_BTPoints.end(), { p1, p2, p3, p4 });
+
+	if (m_vx != 0 && m_vy != 0) {
+		if (theta > 0) {
+			for (int j = 0; j < m_BTPoints.size(); j++) {
+				m_BTPoints[j].X = m_BTPoints[j].X * cos(theta) - m_BTPoints[j].Y * sin(theta);
+				m_BTPoints[j].Y = m_BTPoints[j].X * sin(theta) + m_BTPoints[j].Y * cos(theta);
+			}
+		}
+	}
 	
 }
 
@@ -165,7 +171,7 @@ void CCQArea::getMovingAngle()
 {
 	double xGap = m_fEndPt.X - m_fPt.X;
 	double yGap = m_fEndPt.Y - m_fPt.Y;
-	movingAngle = atan2(yGap, xGap);
+	theta = atan2(yGap, xGap);
 }
 
 #pragma endregion
