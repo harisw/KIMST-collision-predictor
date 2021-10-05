@@ -159,7 +159,7 @@ void CCQArea::getBTPoints()
 	if (m_vx != 0 && m_vy != 0) {
 		if (theta > 0) {
 			for (int j = 0; j < m_BTPoints.size(); j++) {
-				m_BTPoints[j].X = m_BTPoints[j].X * cos(theta) - m_BTPoints[j].Y * sin(theta);
+				m_BTPoints[j].X = m_BTPoints[j].X * cos(theta) - m_BTPoints[j].Y * sin(theta) + 100.0f;
 				m_BTPoints[j].Y = m_BTPoints[j].X * sin(theta) + m_BTPoints[j].Y * cos(theta);
 			}
 		}
