@@ -67,18 +67,18 @@ struct SplitAxis{ // Split할 축(x,y)와 index 값을 갖는 구조체
 	double minPerimeter;
 };
 
-class Node
+class TPRNode
 {
 public: // cskim
-	Node(double _time, Node **nodes, int _treeID);
-	Node(Node **nodes);
+	TPRNode(double _time, TPRNode **nodes, int _treeID);
+	TPRNode(TPRNode **nodes);
 
 	int  treeID;
 	
 public:
-	Node(double _time);
-	Node(bool isNull);
-	~Node(void);
+	TPRNode(double _time);
+	TPRNode(bool isNull);
+	~TPRNode(void);
 
 	int getLevel(){	return m_level;	}
 
@@ -101,10 +101,10 @@ public:
 	void setVBR(double* _VBR){
 		memcpy(m_VBR, _VBR, sizeof(double)*6);
 	}
-	Node* getChildNode(int _index){
+	TPRNode* getChildNode(int _index){
 		return m_childNode[_index];
 	}
-	void setChildNode(Node* _childNode)
+	void setChildNode(TPRNode* _childNode)
 	{
 		m_childNode[m_NumCntChild++] = _childNode;
 
@@ -123,13 +123,13 @@ public:
 		m_VBR[5] = max(m_VBR[5], _childNode->getVBR()[5]);
 		*/
 	}
-	void delChildNode(Node* _childNode);
+	void delChildNode(TPRNode* _childNode);
 
 
-	Node* getParent(){
+	TPRNode* getParent(){
 		return m_parent;
 	}
-	void setParent(Node* _parent){
+	void setParent(TPRNode* _parent){
 		m_parent = _parent;
 	}
 	CEntry* getEntry(){
@@ -149,7 +149,7 @@ public:
 		m_ID = _id;
 	}
 
-	void updateChildNode(Node* _childNode, int _index)
+	void updateChildNode(TPRNode* _childNode, int _index)
 	{
 		m_childNode[_index] = _childNode;
 	}
@@ -170,7 +170,7 @@ public: //for insert
 	void UpdateMBRbyNode(double _time);
 	void UpdateMBR(double _time);
 
-	Node* ChooseChildPath(CEntry _InsertEntry, double _time);
+	TPRNode* ChooseChildPath(CEntry _InsertEntry, double _time);
 	double CalcEnlargeMBR(CEntry _InsertEntry, double _time);
 
 public: //for overflow
@@ -180,20 +180,20 @@ public: //for overflow
 	double getsubArea(double _NodeArea, int _delEntryIndex);
 
 public: //for split
-	void NodeSplit(Node* _curNode, double _time, Node* _newNode);
-	SplitAxis SetSplitAxis(indexXY* _mbrX, indexXY* _mbrY, Node* _OverflowNode);
+	void NodeSplit(TPRNode* _curNode, double _time, TPRNode* _newNode);
+	SplitAxis SetSplitAxis(indexXY* _mbrX, indexXY* _mbrY, TPRNode* _OverflowNode);
 	SplitAxis minPerimeter(indexXY* _pre,indexXY* _next); // 둘레의 합이 작은 엔트리의 조합을 선택하여 Split할 index와 Split할 축이 x축인지 y축인지 리턴함
 	void MBRCopy(indexXY* _dest, indexXY* _start); // indexXY 구조체끼리 MBR 복사
 	void StructtoEntryCopy(CEntry* _dest, indexXY* _start); // indexXY 구조체 값을 Entry로 복사
 	void EntrytoStructCopy(indexXY* _dest, CEntry* _start); // Entry 값을 indexXY 구조체로 복사
 
-	void NonleafNodeSplit(Node* _curNode, double _time, Node* _newNode);
-	SplitAxis minNodePerimeter(indexXY* _XGroup,indexXY* _YGroup, Node* _OverflowNode); // isX: X축으로 SPLIT하면 true, Y축으로 SPLIT하면 false
-	SplitAxis SetNodeSplitAxis(indexXY* _mbrX, indexXY* _mbrY, Node* _OverflowNode);
-	void NodetoStructCopy(indexXY* _dest, Node* _start);
+	void NonleafNodeSplit(TPRNode* _curNode, double _time, TPRNode* _newNode);
+	SplitAxis minNodePerimeter(indexXY* _XGroup,indexXY* _YGroup, TPRNode* _OverflowNode); // isX: X축으로 SPLIT하면 true, Y축으로 SPLIT하면 false
+	SplitAxis SetNodeSplitAxis(indexXY* _mbrX, indexXY* _mbrY, TPRNode* _OverflowNode);
+	void NodetoStructCopy(indexXY* _dest, TPRNode* _start);
 
-	void SetExistingNode(Node* _curNode, SplitAxis _splitAxis, indexXY* _mbrX, indexXY* _mbrY);
-	void SetNewNode(SplitAxis _splitAxis, indexXY* _mbrX, indexXY* _mbrY, double _time, Node* _newNode);
+	void SetExistingNode(TPRNode* _curNode, SplitAxis _splitAxis, indexXY* _mbrX, indexXY* _mbrY);
+	void SetNewNode(SplitAxis _splitAxis, indexXY* _mbrX, indexXY* _mbrY, double _time, TPRNode* _newNode);
 
 	void UpdateParentNode();
 	void UpdateMBRbyExt(double _time);
@@ -209,7 +209,7 @@ public: //for circle search
 
 public:// for Extrapolation
 	void extfuture_mbr(double *_extMbr,double *_mbr, double *_vbr, double _time, int _dim);
-	void extfuture_mbr_of_node(double *_extMbr, Node *_node, double _time, int _dim); // csk
+	void extfuture_mbr_of_node(double *_extMbr, TPRNode *_node, double _time, int _dim); // csk
 
 public: // for KNN
 	void rangeQueryKNN(double centralX, double centralY, double radius, unsigned long  _st, unsigned long  _ed, int& _rsltcnt, vector<CEntry> &_CEntryList, double queryTime);
@@ -232,15 +232,15 @@ protected:
 	double m_extMBR[4];
 	double m_VBR[6];
 	
-	Node* m_parent;
+	TPRNode* m_parent;
 	//CEntry m_entry[CAPACITY+1];
 	CEntry *m_entry;
 
 	unsigned long m_time;
 
 public: // CSKIM
-	Node **m_ObjectNodePositionRef;
-	Node* m_childNode[NUMNODE + 1];	// Sunghoon CAPACITY -> NUMNODE
+	TPRNode **m_ObjectNodePositionRef;
+	TPRNode* m_childNode[NUMNODE + 1];	// Sunghoon CAPACITY -> NUMNODE
 
 	bool checkEntryIncluded(int id) 
 	{ // CSKIM

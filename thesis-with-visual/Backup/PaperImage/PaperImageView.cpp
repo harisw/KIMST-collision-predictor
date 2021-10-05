@@ -200,8 +200,8 @@ RectF CPaperImageView::getMapRect()
 
 POINT CPaperImageView::Map2Scr(REAL x, REAL y)
 {
-	REAL left = m_centerPt.X - (REAL)((M_RECT_W /2.0f * m_dRate)) - 500;
-	REAL top = m_centerPt.Y - (REAL)((M_RECT_H /2.0f * m_dRate)) - 500;
+	REAL left = m_centerPt.X - (REAL)((M_RECT_W /2.0f * m_dRate));
+	REAL top = m_centerPt.Y - (REAL)((M_RECT_H /2.0f * m_dRate)) -350;
 
 	REAL dx = x - left;
 	REAL dy = y - top;

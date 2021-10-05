@@ -36,7 +36,7 @@
     <ClCompile Include="TPR\TPRTree.cpp">
       <Filter>Source Files\TPRTree</Filter>
     </ClCompile>
-    <ClCompile Include="TPR\Node.cpp">
+    <ClCompile Include="TPR\TPRNode.cpp">
       <Filter>Source Files\TPRTree</Filter>
     </ClCompile>
   </ItemGroup>
@@ -50,10 +50,10 @@
     <ClInclude Include="TPR\ICMSCalculator.h">
       <Filter>Header Files\TPRTree</Filter>
     </ClInclude>
-    <ClInclude Include="TPR\Node.h">
+    <ClInclude Include="TPR\TPRTree.h">
       <Filter>Header Files\TPRTree</Filter>
     </ClInclude>
-    <ClInclude Include="TPR\TPRTree.h">
+    <ClInclude Include="TPR\TPRNode.h">
       <Filter>Header Files\TPRTree</Filter>
     </ClInclude>
   </ItemGroup>

@@ -11,7 +11,7 @@
 #define min(a,b)    (((a) < (b)) ? (a) : (b))
 
 
-bool TPRTree::RemoveEntry(Node* _curNode, int _id) // cskim
+bool TPRTree::RemoveEntry(TPRNode* _curNode, int _id) // cskim
 {
 	bool removed = false;
 	removed = _curNode->RemoveEntry(_id);
@@ -25,7 +25,7 @@ bool TPRTree::RemoveEntry(Node* _curNode, int _id) // cskim
 	return true;
 }
 
-int TPRTree::getNodeCountRecursive(Node *node)
+int TPRTree::getNodeCountRecursive(TPRNode *node)
 {
 	if (node == NULL) return 0;
 
@@ -40,7 +40,7 @@ int TPRTree::getNodeCountRecursive(Node *node)
 }
 
 
-int TPRTree::getNLeafCountRecursive(Node *node)
+int TPRTree::getNLeafCountRecursive(TPRNode *node)
 {
 	if (node->getLevel() == 0) return 0;
 
@@ -55,7 +55,7 @@ int TPRTree::getNLeafCountRecursive(Node *node)
 
 }
 
-int TPRTree::getLeafCountRecursive(Node *node)
+int TPRTree::getLeafCountRecursive(TPRNode *node)
 {
 	if (node->getLevel() == 0) return 1;
 
@@ -69,7 +69,7 @@ int TPRTree::getLeafCountRecursive(Node *node)
 	return LeafCount;
 }
 
-int TPRTree::getObjectCountRecursive(Node *node)
+int TPRTree::getObjectCountRecursive(TPRNode *node)
 {
 	if (node->getLevel() == 0) {
 		return node->getNumEntrys();
@@ -85,7 +85,7 @@ int TPRTree::getObjectCountRecursive(Node *node)
 	return ObjectCount;
 }
 
-//void TPRTree::printAllObjectRecursive(Node* node)
+//void TPRTree::printAllObjectRecursive(TPRNode* node)
 //{
 //	if (node->getLevel() == 0) {
 //		cout << "Node #" << node->getID() << ",  " << node->getNumEntrys() << " Entries" << endl;
@@ -128,7 +128,7 @@ TPRTree::TPRTree(void)
 	}
 }
 
-void  TPRTree::ClearNodeRecursive(Node *_curNode)
+void  TPRTree::ClearNodeRecursive(TPRNode *_curNode)
 {
 	if (_curNode == NULL) {
 		return;
@@ -176,7 +176,7 @@ TPRTree::~TPRTree(void)
 	delete m_root;
 }
 
-void TPRTree::TreeCheck(Node* node) {
+void TPRTree::TreeCheck(TPRNode* node) {
 	if (node == NULL) {
 		printf("invalid\n");
 	}
@@ -185,7 +185,7 @@ void TPRTree::TreeCheck(Node* node) {
 	}
 }
 
-bool TPRTree::InsertRecursive(Node* _curNode, CEntry _input, double _insertTime)
+bool TPRTree::InsertRecursive(TPRNode* _curNode, CEntry _input, double _insertTime)
 {
 
 	if (_curNode->getLevel() == 0)
@@ -219,7 +219,7 @@ bool TPRTree::InsertRecursive(Node* _curNode, CEntry _input, double _insertTime)
 			{
 				_curNode->UpdateMBRbyExt(_insertTime);
 
-				Node* tmp = new Node(_insertTime, m_ObjectNodePosition, this->getTreeID());
+				TPRNode* tmp = new TPRNode(_insertTime, m_ObjectNodePosition, this->getTreeID());
 				tmp->allocEntryMemory();
 
 				double parentMBR[4] = { _curNode->getMBR()[0], _curNode->getMBR()[1], _curNode->getMBR()[2], _curNode->getMBR()[3] };
@@ -230,7 +230,7 @@ bool TPRTree::InsertRecursive(Node* _curNode, CEntry _input, double _insertTime)
 
 				if (_curNode == m_root)
 				{
-					Node* tmpRoot = new Node(_insertTime, m_ObjectNodePosition, this->getTreeID());
+					TPRNode* tmpRoot = new TPRNode(_insertTime, m_ObjectNodePosition, this->getTreeID());
 					tmpRoot->setID(m_NodeIDCtrl++);
 
 					tmpRoot->setChildNode(_curNode);
@@ -289,13 +289,13 @@ bool TPRTree::InsertRecursive(Node* _curNode, CEntry _input, double _insertTime)
 	}
 	else
 	{
-		Node* ChooseNode = _curNode->ChooseChildPath(_input, _insertTime);
+		TPRNode* ChooseNode = _curNode->ChooseChildPath(_input, _insertTime);
 		InsertRecursive(ChooseNode, _input, _insertTime);
 		_curNode->UpdateMBRbyExt(_insertTime);
 
 		if (_curNode->getNumCntChild() > NUMNODE)
 		{
-			Node* tmp = new Node(_insertTime, m_ObjectNodePosition, this->getTreeID());
+			TPRNode* tmp = new TPRNode(_insertTime, m_ObjectNodePosition, this->getTreeID());
 			double parentMBR[4] = { _curNode->getMBR()[0], _curNode->getMBR()[1], _curNode->getMBR()[2], _curNode->getMBR()[3] };
 			double parentVBR[6] = { _curNode->getVBR()[0], _curNode->getVBR()[1], _curNode->getVBR()[2], _curNode->getVBR()[3], _curNode->getVBR()[4], _curNode->getVBR()[5] };
 
@@ -305,7 +305,7 @@ bool TPRTree::InsertRecursive(Node* _curNode, CEntry _input, double _insertTime)
 			//tmp->UpdateMBRbyExt(_insertTime);//
 			if (_curNode == m_root)
 			{
-				Node* tmpRoot = new Node(_insertTime, m_ObjectNodePosition, this->getTreeID());
+				TPRNode* tmpRoot = new TPRNode(_insertTime, m_ObjectNodePosition, this->getTreeID());
 				tmpRoot->setID(m_NodeIDCtrl++);
 				tmpRoot->setChildNode(_curNode);
 				tmpRoot->setChildNode(tmp);
@@ -381,7 +381,7 @@ bool TPRTree::Insert(CEntry _input)
 
 	if(m_root == NULL)
 	{
-		m_root = new Node(insertTime, m_ObjectNodePosition, this->getTreeID()); // cskim
+		m_root = new TPRNode(insertTime, m_ObjectNodePosition, this->getTreeID()); // cskim
 		m_root->allocEntryMemory();
 
 		m_root->Insert(_input);
@@ -408,7 +408,7 @@ bool TPRTree::Insert(CEntry _input)
 	return true;
 }
 
-double TPRTree::CalcNodeEnlargeMBR(Node* _underflowNode, Node* _borrowNode)
+double TPRTree::CalcNodeEnlargeMBR(TPRNode* _underflowNode, TPRNode* _borrowNode)
 {
 	double underflowNodeMBR[4];
 	double borrowNodeMBR[4];
@@ -447,7 +447,7 @@ double TPRTree::CalcNodeEnlargeMBR(Node* _underflowNode, Node* _borrowNode)
 	return enlargeArea;
 }
 
-bool TPRTree::isUnderflow(Node* _curNode)
+bool TPRTree::isUnderflow(TPRNode* _curNode)
 {
 	if (_curNode->getNumCntChild() < (NUMNODE*UNDERFLOW_RATIO))		// Sunghoon CAPACITY -> NUMNODE
 		return true;
@@ -456,7 +456,7 @@ bool TPRTree::isUnderflow(Node* _curNode)
 }
 
 
-bool TPRTree::isUnderflowEntry(Node* _curNode)
+bool TPRTree::isUnderflowEntry(TPRNode* _curNode)
 {
 	if (_curNode->getNumEntrys() < (CAPACITY*UNDERFLOW_RATIO)) {
 		return true;
@@ -513,7 +513,7 @@ bool TPRTree::Delete(int _id)
 	}
 	else
 	{
-		Node *_curNode = m_root;
+		TPRNode *_curNode = m_root;
 		bool bUnderflow = false;
 		bool deleteResult = false;
 		list<CEntry> CEntryList;
@@ -536,7 +536,7 @@ bool TPRTree::Delete(int _id)
 	}
 }
 
-bool TPRTree::DeleteRecursive(CEntry _input, Node* _curNode, bool &_bUnderflow, list<CEntry> &_CEntryList, double _deleteTime)
+bool TPRTree::DeleteRecursive(CEntry _input, TPRNode* _curNode, bool &_bUnderflow, list<CEntry> &_CEntryList, double _deleteTime)
 {
 	bool includedResult = false;
 	if(_curNode != NULL)

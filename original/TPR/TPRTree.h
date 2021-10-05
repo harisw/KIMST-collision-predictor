@@ -5,7 +5,7 @@
 //******************************************************************************************************
 #pragma once
 #define _SILENCE_STDEXT_HASH_DEPRECATION_WARNINGS
-#include "Node.h"
+#include "TPRNode.h"
 #include "CEntry.h"
 #include <fstream>
 #include <string.h>
@@ -65,13 +65,13 @@ public:
 	unsigned long getTime(){	return m_time;	}
 	void setTime(unsigned long _time){ m_time = _time; }
 
-	Node* getRoot(){	return m_root;	}
-	void setRoot(Node* _root){ m_root = _root; }
+	TPRNode* getRoot(){	return m_root;	}
+	void setRoot(TPRNode* _root){ m_root = _root; }
 
-	void TreeCheck(Node* node);
+	void TreeCheck(TPRNode* node);
 public: //for insertion
 	bool Insert(CEntry _input);// 최초 insert함수이며, InsertRecursive를 호출함
-	bool InsertRecursive(Node* _curNode, CEntry _input, double _insertTime);//Recursive하게 choosepath하여 leaf노드에 도달시 insert
+	bool InsertRecursive(TPRNode* _curNode, CEntry _input, double _insertTime);//Recursive하게 choosepath하여 leaf노드에 도달시 insert
 
 	//bool Delete(CEntry _input);
 	bool Delete(int _id);
@@ -83,11 +83,11 @@ public: //for insertion
 
 
 public: // for Deletion
-	bool DeleteRecursive(CEntry _input, Node* _curNode, bool &_bUnderflow, list<CEntry> &_CEntryList, double _deleteTime);
-	bool isUnderflow(Node* _curNode);
-	bool isUnderflowEntry(Node* _curNode);// cskim
+	bool DeleteRecursive(CEntry _input, TPRNode* _curNode, bool &_bUnderflow, list<CEntry> &_CEntryList, double _deleteTime);
+	bool isUnderflow(TPRNode* _curNode);
+	bool isUnderflowEntry(TPRNode* _curNode);// cskim
 
-	double CalcNodeEnlargeMBR(Node* _underflowNode, Node* _borrowNode);
+	double CalcNodeEnlargeMBR(TPRNode* _underflowNode, TPRNode* _borrowNode);
 
 public: // for Search
 	void rangeQueryKNN(double centralX, double centralY, double centralZ, double radius, vector<EntryKNN> &KNNEntryList);//KNN(질의 시간으로 업데이트 X)
@@ -101,48 +101,48 @@ public:
 	unsigned long m_time;
 	int m_level;
 public :
-	Node *m_root;
+	TPRNode *m_root;
 	InsertedTrackInfo *InsertedTrackList;// [10000];
 
 public:
-	Node **m_ObjectNodePosition = new Node*[MAX_TRACK_NUM]; // cskim
+	TPRNode **m_ObjectNodePosition = new TPRNode*[MAX_TRACK_NUM]; // cskim
 
-	bool RemoveEntry(Node* _curNode, int _id); // cskim
+	bool RemoveEntry(TPRNode* _curNode, int _id); // cskim
 
 
 
 	int getNodeCount(){
 		return getNodeCountRecursive(m_root);
 	}
-	int getNodeCountRecursive(Node *node);
+	int getNodeCountRecursive(TPRNode *node);
 
 	int getNLeafCount() {
 		return getNLeafCountRecursive(m_root);
 	}
-	int getNLeafCountRecursive(Node *node);
+	int getNLeafCountRecursive(TPRNode *node);
 
 	int getLeafCount() {
 		return getLeafCountRecursive(m_root);
 	}
-	int getLeafCountRecursive(Node *node);
+	int getLeafCountRecursive(TPRNode *node);
 
 	int getObjectCount() {
 		return getObjectCountRecursive(m_root);
 	}
-	int getObjectCountRecursive(Node *node);
+	int getObjectCountRecursive(TPRNode *node);
 
 	void printAllObject() {
-		const Node* end = &*m_ObjectNodePosition[MAX_TRACK_NUM];
+		const TPRNode* end = &*m_ObjectNodePosition[MAX_TRACK_NUM];
 
-		for (Node * curr = *m_ObjectNodePosition; curr != end; ++curr)
+		for (TPRNode * curr = *m_ObjectNodePosition; curr != end; ++curr)
 		{
 			cout << "Node #" << &curr->m_ID << ",  " << " Entries" << endl;
 		}
 		//return printAllObjectRecursive(m_root);
 	}
-	//void printAllObjectRecursive(Node* node);
+	//void printAllObjectRecursive(TPRNode* node);
 
-	Node *getRootNode()
+	TPRNode *getRootNode()
 	{
 		return m_root;
 	}
@@ -152,7 +152,7 @@ public:
 public: // cskim
 
 	bool Clear(void);
-	void ClearNodeRecursive(Node *_curNode);
+	void ClearNodeRecursive(TPRNode *_curNode);
 
 	int update_count;
 	int hit_count;

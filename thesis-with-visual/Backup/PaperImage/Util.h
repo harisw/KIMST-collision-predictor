@@ -23,8 +23,8 @@
 
 #define SHIPWIDTH		19.0f	// 함선 폭 19m
 #define SHIPLENGTH		156.0f	// 함선 길이 156m
-#define VESSEL_RAD		400
-#define BUFFER_DIST		300
+#define VESSEL_RAD		40
+#define BUFFER_DIST		30
 //#define SHIPWIDTH		15.0f	// 함선 폭 19m
 //#define SHIPLENGTH		136.0f	// 함선 길이 156m
 //==============================================================================
@@ -49,9 +49,9 @@
 
 //==============================================================================
 //Original
-#define MAP_METER		20000.0	// 화면에 표시되는 전체 지도 거리(2000km)
-#define R_METER	3000.0	// 레이더 반경 (300km)
-#define CELL_METER		250.0		// 셀의 가로 간격 (25km)
+#define MAP_METER		2000.0	// 화면에 표시되는 전체 지도 거리(2000km)
+#define R_METER	300.0	// 레이더 반경 (300km)
+#define CELL_METER		25.0		// 셀의 가로 간격 (25km)
 
 #define ARROWWIDTH		8			// 경로를 그려줄 때 화살표 크기
 

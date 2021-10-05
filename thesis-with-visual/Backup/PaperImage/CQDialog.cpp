@@ -438,8 +438,8 @@ UINT ThreadFunc(LPVOID pParam)
 
 		for (int j = 0; j < 3; j++)									// 저속, 중속, 고속
 		{
-			int mins = divOptions[i][j * 2];
-			int maxs = divOptions[i][j * 2 + 1];
+			int mins = divOptions[i][j * 2]/10;
+			int maxs = divOptions[i][j * 2 + 1] / 10;
 			int count = (int)round(CntF * typeOptions[i] * speedOptions[j]);
 			for (int k = 0; k < count; k++)
 			{
@@ -472,8 +472,8 @@ UINT ThreadFunc(LPVOID pParam)
 
 			for (int j = 0; j < 3; j++)								// 저속, 중속, 고속
 			{
-				int mins = divOptions[i][j * 2];
-				int maxs = divOptions[i][j * 2 + 1];
+				int mins = divOptions[i][j * 2]/10;
+				int maxs = divOptions[i][j * 2 + 1]/10;
 				int count = (int)round(CntE * typeOptions[i] * speedOptions[j] * cqOptions[cq]);
 				for (int k = 0; k < count; k++)
 				{

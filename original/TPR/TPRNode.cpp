@@ -3,7 +3,7 @@
 //Coded by Bong-hee Hong, Ji-wan Lee, Jae-gi Hong, Ki-jin Kim from Pusan National University
 //May 2016
 //******************************************************************************************************
-#include "Node.h"
+#include "TPRNode.h"
 #include <list>
 #include <tchar.h>
 
@@ -12,7 +12,7 @@ using namespace std;
 #define max(a,b)    (((a) > (b)) ? (a) : (b))
 #define min(a,b)    (((a) < (b)) ? (a) : (b))
 
-Node::Node(bool isNull)
+TPRNode::TPRNode(bool isNull)
 {
 	m_ID = -1;
 	m_level = 0;
@@ -31,7 +31,7 @@ Node::Node(bool isNull)
 	m_parent = NULL;
 }
 
-Node::Node(double _time, Node **nodes, int _treeID)
+TPRNode::TPRNode(double _time, TPRNode **nodes, int _treeID)
 {
 	treeID = _treeID;
 
@@ -66,7 +66,7 @@ Node::Node(double _time, Node **nodes, int _treeID)
 
 }
 
-Node::Node( Node **nodes) // cskim
+TPRNode::TPRNode( TPRNode **nodes) // cskim
 {
 	m_ObjectNodePositionRef = nodes; // cskim
 
@@ -88,7 +88,7 @@ Node::Node( Node **nodes) // cskim
 	m_NumCntChild = 0;
 	//m_entry = NULL;
 }
-Node::Node(double _time)
+TPRNode::TPRNode(double _time)
 {
 	m_level = 0;
 	m_ID = -1;
@@ -113,7 +113,7 @@ Node::Node(double _time)
 	}
 }
 
-Node::~Node(void)
+TPRNode::~TPRNode(void)
 {
 	//if (TREE_TYPE_MEMORY_OR_DISK == 0)
 	//	free(m_entry);
@@ -125,7 +125,7 @@ Node::~Node(void)
 	m_parent = NULL;
 }
 
-bool Node::Included(CEntry _input)
+bool TPRNode::Included(CEntry _input)
 {
 	/*
 	if (_input.getX() >= m_MBR[0] && _input.getX() <= m_MBR[2] && _input.getY() >= m_MBR[1] && _input.getY() <= m_MBR[3])
@@ -141,7 +141,7 @@ bool Node::Included(CEntry _input)
 	
 }
 
-CEntry Node::Pickworst()
+CEntry TPRNode::Pickworst()
 {
 	double myArea = (m_MBR[2] - m_MBR[0]) * (m_MBR[3] - m_MBR[1]);
 	double subArea[CAPACITY+1];
@@ -166,7 +166,7 @@ CEntry Node::Pickworst()
 	return m_entry[index];
 }
 
-double Node::getsubArea(double _NodeArea, int _delEntryIndex)
+double TPRNode::getsubArea(double _NodeArea, int _delEntryIndex)
 {
 	double minX = DBL_MAX;
 	double minY = DBL_MAX;
@@ -195,7 +195,7 @@ double Node::getsubArea(double _NodeArea, int _delEntryIndex)
 	return subArea;
 }
 
-bool Node::RemoveAllEntry()
+bool TPRNode::RemoveAllEntry()
 {
 
 	for(int i=0;i<m_NumCntEntries;i++)
@@ -210,7 +210,7 @@ bool Node::RemoveAllEntry()
 
 
 
-bool Node::RemoveEntry(int _ID)
+bool TPRNode::RemoveEntry(int _ID)
 {
 	for(int i=0;i<m_NumCntEntries;i++)
 	{
@@ -227,7 +227,7 @@ bool Node::RemoveEntry(int _ID)
 }
 
 
-void Node::NodetoStructCopy(indexXY* _dest, Node* _start)
+void TPRNode::NodetoStructCopy(indexXY* _dest, TPRNode* _start)
 {
 	_dest->id = _start->getID();
 	_dest->time = -1;
@@ -239,7 +239,7 @@ void Node::NodetoStructCopy(indexXY* _dest, Node* _start)
 	_dest->vz = NULL;
 }
 
-void Node::UpdateParentNode()
+void TPRNode::UpdateParentNode()
 {
 	if(m_level>0)
 	{
@@ -250,14 +250,14 @@ void Node::UpdateParentNode()
 	}
 }
 
-void Node::NonleafNodeSplit(Node* _curNode, double _time, Node* _newNode)
+void TPRNode::NonleafNodeSplit(TPRNode* _curNode, double _time, TPRNode* _newNode)
 {
 	indexXY NodeX[NUMNODE+1] = {};		// Sunghoon CAPACITY -> NUMNODE
 	indexXY NodeY[NUMNODE+1] = {};		// Sunghoon CAPACITY -> NUMNODE
 	indexXY* NodeList;	// Sunghoon CAPACITY -> NUMNODE
 	SplitAxis _splitAxis = SetNodeSplitAxis(NodeX,NodeY,_curNode);
 
-	Node _existingNode = *_curNode;
+	TPRNode _existingNode = *_curNode;
 
 	if (_splitAxis.isX == true)
 		NodeList = NodeX;
@@ -313,7 +313,7 @@ void Node::NonleafNodeSplit(Node* _curNode, double _time, Node* _newNode)
 bool xCmp(indexXY a, indexXY b) { return a.x < b.x; }
 bool yCmp(indexXY a, indexXY b) { return a.y < b.y; }
 
-SplitAxis Node::SetNodeSplitAxis(indexXY* _mbrX, indexXY* _mbrY, Node* _OverflowNode)
+SplitAxis TPRNode::SetNodeSplitAxis(indexXY* _mbrX, indexXY* _mbrY, TPRNode* _OverflowNode)
 {
 	// Sunghoon
 	int n;
@@ -336,7 +336,7 @@ SplitAxis Node::SetNodeSplitAxis(indexXY* _mbrX, indexXY* _mbrY, Node* _Overflow
 	return splitAxis;
 }
 
-SplitAxis Node::minNodePerimeter(indexXY* _XGroup,indexXY* _YGroup, Node* _OverflowNode)
+SplitAxis TPRNode::minNodePerimeter(indexXY* _XGroup,indexXY* _YGroup, TPRNode* _OverflowNode)
 {
 	double minPerimeter_X = DBL_MAX;
 	double splitIndex_X = -1; 
@@ -499,7 +499,7 @@ SplitAxis Node::minNodePerimeter(indexXY* _XGroup,indexXY* _YGroup, Node* _Overf
 	}
 }
 
-SplitAxis Node::SetSplitAxis(indexXY* _mbrX, indexXY* _mbrY, Node* _OverflowNode)
+SplitAxis TPRNode::SetSplitAxis(indexXY* _mbrX, indexXY* _mbrY, TPRNode* _OverflowNode)
 {
 	for(int i=0;i<CAPACITY+1;i++)
 	{
@@ -514,7 +514,7 @@ SplitAxis Node::SetSplitAxis(indexXY* _mbrX, indexXY* _mbrY, Node* _OverflowNode
 	return splitAxis;
 }
 
-void Node::NodeSplit(Node* _curNode, double _time, Node* _newNode)
+void TPRNode::NodeSplit(TPRNode* _curNode, double _time, TPRNode* _newNode)
 {
 	indexXY _mbrX[CAPACITY+1] = {};
 	indexXY _mbrY[CAPACITY+1] = {};
@@ -551,19 +551,19 @@ void Node::NodeSplit(Node* _curNode, double _time, Node* _newNode)
 	_newNode->setTime(_time);
 }
 
-int Node::getNumEntrys()
+int TPRNode::getNumEntrys()
 {
 	return m_NumCntEntries;
 }
 
-bool Node::Insert(CEntry _InsertEntry)
+bool TPRNode::Insert(CEntry _InsertEntry)
 {
 	memcpy(&m_entry[m_NumCntEntries++],&_InsertEntry,sizeof(_InsertEntry));
 
 	return true;
 }
 
-void Node::UpdateMBR(double _time)
+void TPRNode::UpdateMBR(double _time)
 {
 	if(getLevel() == 0)
 	{
@@ -575,7 +575,7 @@ void Node::UpdateMBR(double _time)
 	}
 }
 
-void Node::UpdateMBRbyEntry(double _time)
+void TPRNode::UpdateMBRbyEntry(double _time)
 {
 
 	double tempMBR[4] = { DBL_MAX, DBL_MAX, -DBL_MAX, -DBL_MAX };
@@ -607,7 +607,7 @@ void Node::UpdateMBRbyEntry(double _time)
 	setVBR(tempVBR);
 }
 
-void Node::UpdateMBRbyNode(double _time)
+void TPRNode::UpdateMBRbyNode(double _time)
 {
 	
 	double tempMBR[4] = { DBL_MAX, DBL_MAX, -DBL_MAX, -DBL_MAX };
@@ -642,13 +642,13 @@ void Node::UpdateMBRbyNode(double _time)
 }
 
 
-void Node::SortChildNode()
+void TPRNode::SortChildNode()
 {
 
 	if(m_level>0)
 	{
 		int cnt = 0;
-		Node* tmpNode[NUMNODE+1];	
+		TPRNode* tmpNode[NUMNODE+1];
 		for(int i=0;i<m_NumCntChild;i++)
 		{
 			if(m_childNode[i] != NULL)
@@ -671,7 +671,7 @@ void Node::SortChildNode()
 }
 
 
-void Node::MBRCopy(indexXY* _dest, indexXY* _start)
+void TPRNode::MBRCopy(indexXY* _dest, indexXY* _start)
 {
 	_dest->id = _start->id;
 	_dest->time = _start->time;
@@ -692,7 +692,7 @@ void Node::MBRCopy(indexXY* _dest, indexXY* _start)
 
 }
 
-void Node::StructtoEntryCopy(CEntry* _dest, indexXY* _start)
+void TPRNode::StructtoEntryCopy(CEntry* _dest, indexXY* _start)
 {
 	_dest->setID(_start->id);
 	_dest->setTime(_start->time);
@@ -705,7 +705,7 @@ void Node::StructtoEntryCopy(CEntry* _dest, indexXY* _start)
 	_dest->m_byEnvironment = _start->m_byEnvironment;
 }
 
-void Node::EntrytoStructCopy(indexXY* _dest, CEntry* _start)
+void TPRNode::EntrytoStructCopy(indexXY* _dest, CEntry* _start)
 {
 	_dest->id = _start->getID();
 	_dest->time = _start->getTime();
@@ -718,7 +718,7 @@ void Node::EntrytoStructCopy(indexXY* _dest, CEntry* _start)
 	_dest->m_byEnvironment = _start->m_byEnvironment;
 }
 
-SplitAxis Node::minPerimeter(indexXY* _XGroup,indexXY* _YGroup) 
+SplitAxis TPRNode::minPerimeter(indexXY* _XGroup,indexXY* _YGroup) 
 {
 	double minPerimeter_X = DBL_MAX;
 	double splitIndex_X = -1; 
@@ -883,7 +883,7 @@ SplitAxis Node::minPerimeter(indexXY* _XGroup,indexXY* _YGroup)
 	}
 }
 
-Node* Node::ChooseChildPath(CEntry _InsertEntry, double _time)
+TPRNode* TPRNode::ChooseChildPath(CEntry _InsertEntry, double _time)
 {
 	struct enlargeAreaStruct
 	{
@@ -911,7 +911,7 @@ Node* Node::ChooseChildPath(CEntry _InsertEntry, double _time)
 	return m_childNode[resultIndex];
 }
 
-double Node::CalcEnlargeMBR(CEntry _InsertEntry, double _time)
+double TPRNode::CalcEnlargeMBR(CEntry _InsertEntry, double _time)
 {
 	double extMBR[4];
 
@@ -944,7 +944,7 @@ double Node::CalcEnlargeMBR(CEntry _InsertEntry, double _time)
 	return enlargeArea;
 }
 
-void Node::SetNewNode(SplitAxis _splitAxis, indexXY* _mbrX, indexXY* _mbrY, double _time, Node* _newNode)
+void TPRNode::SetNewNode(SplitAxis _splitAxis, indexXY* _mbrX, indexXY* _mbrY, double _time, TPRNode* _newNode)
 {
 	indexXY* mbrList;
 	if (_splitAxis.isX == true)
@@ -966,7 +966,7 @@ void Node::SetNewNode(SplitAxis _splitAxis, indexXY* _mbrX, indexXY* _mbrY, doub
 	m_time = _time;
 }
 
-void Node::SetExistingNode(Node* _curNode, SplitAxis _splitAxis, indexXY* _mbrX, indexXY* _mbrY)
+void TPRNode::SetExistingNode(TPRNode* _curNode, SplitAxis _splitAxis, indexXY* _mbrX, indexXY* _mbrY)
 {
 	indexXY* mbrList;
 	if(_splitAxis.isX == true)
@@ -991,7 +991,7 @@ void Node::SetExistingNode(Node* _curNode, SplitAxis _splitAxis, indexXY* _mbrX,
 	}
 }
 
-void Node::delChildNode(Node* _childNode)
+void TPRNode::delChildNode(TPRNode* _childNode)
 {
 	for(int i=0;i<m_NumCntChild;i++)
 	{
@@ -1005,12 +1005,12 @@ void Node::delChildNode(Node* _childNode)
 	}
 }
 
-bool Node::RectangleInsect(double minX, double minY,double maxX, double maxY, double centralX, double centralY, double radius, int id)
+bool TPRNode::RectangleInsect(double minX, double minY,double maxX, double maxY, double centralX, double centralY, double radius, int id)
 {
 	return !((minX > centralX + radius) || (maxX < centralX - radius) || (minY > centralY + radius) || (maxY < centralY - radius));
 }
 
-void Node::extfuture_mbr(double *_extMbr,double *_mbr, double *_vbr, double _time, int _dim) 
+void TPRNode::extfuture_mbr(double *_extMbr,double *_mbr, double *_vbr, double _time, int _dim) 
 {
 	double diffTime = _time - m_time; // sec.
 	_extMbr[0] = _mbr[0] + _vbr[0] * diffTime ;
@@ -1043,7 +1043,7 @@ void Node::extfuture_mbr(double *_extMbr,double *_mbr, double *_vbr, double _tim
 	*/
 }
 
-void Node::extfuture_mbr_of_node(double *_extMbr, Node *_node, double _time, int _dim)
+void TPRNode::extfuture_mbr_of_node(double *_extMbr, TPRNode *_node, double _time, int _dim)
 {
 	double diffTime = _time - _node->m_time; 
 	_extMbr[0] = _node->m_MBR[0] + _node->m_VBR[0] * diffTime ;
@@ -1076,7 +1076,7 @@ void Node::extfuture_mbr_of_node(double *_extMbr, Node *_node, double _time, int
 	*/
 }
 
-void Node::rangeQueryKNN(double centralX, double centralY, double radius, unsigned long _st, unsigned long _ed, int& _rsltcnt, vector<CEntry> &_CEntryList, double _queryTime)
+void TPRNode::rangeQueryKNN(double centralX, double centralY, double radius, unsigned long _st, unsigned long _ed, int& _rsltcnt, vector<CEntry> &_CEntryList, double _queryTime)
 {
 	bool find = false;
 
@@ -1127,13 +1127,13 @@ void Node::rangeQueryKNN(double centralX, double centralY, double radius, unsign
 	}
 }
 
-void Node::UpdateMBRbyExt(double _time)
+void TPRNode::UpdateMBRbyExt(double _time)
 {
 	this->UpdateMBR(_time);
 	m_time = _time;
 }
 
-void Node::writeEntryFile()
+void TPRNode::writeEntryFile()
 {
 	if (TREE_TYPE_MEMORY_OR_DISK == 0) return;
 	
@@ -1152,7 +1152,7 @@ void Node::writeEntryFile()
 	
 }
 
-void Node::readEntryFile()
+void TPRNode::readEntryFile()
 {
 	if (TREE_TYPE_MEMORY_OR_DISK == 0) return;
 
@@ -1177,7 +1177,7 @@ void Node::readEntryFile()
 	
 }
 
-void Node::allocEntryMemory()
+void TPRNode::allocEntryMemory()
 {
 	if (TREE_TYPE_MEMORY_OR_DISK == 0) return;
 
@@ -1188,7 +1188,7 @@ void Node::allocEntryMemory()
 	m_entry = (CEntry*)malloc((CAPACITY+1) * sizeof(CEntry));
 
 }
-void Node::freeEntryMemory()
+void TPRNode::freeEntryMemory()
 {
 	if (TREE_TYPE_MEMORY_OR_DISK == 0) return;
 
